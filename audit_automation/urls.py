@@ -17,14 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from interface.views import login_page, home, user_logout
+from interface.views import * #login_page, home, user_logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', login_page, name='login'),
     path('logout/', user_logout, name='logout'),
     path('', home, name='home'),
-    # path('tes', name ="test"),
+    path('redflag/', red_flag, name ="redflag"),
+    path('automation/', automate, name="automation"),
+    path('learn/', learn, name="learn"),
     path("password/", auth_views.PasswordChangeView.as_view(template_name='login/password_change.html'),
          name='password'),
     path("password/done/", auth_views.PasswordChangeDoneView.as_view(template_name='login/password_change_done.html'),

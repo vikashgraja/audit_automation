@@ -60,7 +60,7 @@ nav.sticky .logo a{
   color: #00aad2;
 }
 .home{
-  height: 10vh;
+  height: 25vh;
   width: 100%;
   /*background: url("images/background.png") no-repeat;*/
   background-size: cover;
@@ -68,11 +68,7 @@ nav.sticky .logo a{
   background-attachment: fixed;
   font-family: 'Ubuntu', sans-serif;
 }
-h2{
-  font-size: 30px;
-  margin-bottom: 6px;
-  color: #00aad2;
-}
-.container{
-  padding: 40px 80px;
+
+.content {
+  padding: 100px;
 }

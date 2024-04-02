@@ -6,7 +6,7 @@
   <head>
     <meta charset="UTF-8">
      <title>Plant Audit</title>
-      <link rel="stylesheet" href="{% static "css/nav.css" %}">
+      <link rel="stylesheet" href="{% static 'css/nav.css' %}">
    </head>
 <body>
 
@@ -17,9 +17,9 @@
       </div>
       <ul class="nav-links">
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="#">Red Flag</a></li>
-        <li><a href="#">Automation</a></li>
-        <li><a href="#">Learn</a></li>
+        <li><a href="{% url 'redflag' %}">Red Flag</a></li>
+        <li><a href="{% url 'automation' %}">Automation</a></li>
+        <li><a href="{% url 'learn' %}">Learn</a></li>
         {% if user.is_superuser %}
         <li><a href="#">Users</a></li>
         <li><a href="#">Task</a></li>
@@ -29,9 +29,13 @@
       </ul>
     </div>
   </nav>
-  <section class="home"></section>
+<!--  <section class="home"></section>-->
+
+  <div class="content">
     {% block content %}
     {% endblock %}
+  </div>
+
 </body>
   
   <script>

@@ -13,12 +13,11 @@ def login_page(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        print(user)
         if user is not None:
             login(request, user)
             return redirect("home")
         else:
-            messages.success(request, "Try again")
+            # messages.success(request, "Try again")
             return redirect("login")
 
     return render(request, "login/login.html")
@@ -31,6 +30,18 @@ def home(request):
 
 def user_logout(request):
     logout(request)
-    messages.info(request, "Logged out successfully!")
+    # messages.info(request, "Logged out successfully!")
     return redirect("home")
 
+
+@login_required(login_url='login')
+def red_flag(request):
+    return render(request, "login/red_flag.html")
+
+@login_required(login_url='login')
+def automate(request):
+    return render(request, "login/automation.html")
+
+@login_required(login_url='login')
+def learn(request):
+    return render(request, "login/learn.html")
