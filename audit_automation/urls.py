@@ -18,17 +18,26 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from interface.views import * #login_page, home, user_logout
+from user_management.views import user_list
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('login/', login_page, name='login'),
     path('logout/', user_logout, name='logout'),
     path('', home, name='home'),
     path('redflag/', red_flag, name ="redflag"),
     path('automation/', automate, name="automation"),
     path('learn/', learn, name="learn"),
+    path('register/', register_user, name='register'),
+    path('user_list/', user_list, name='user_list'),
+    path('delete_user/', user_list, name='delete_user'),
+    path('update_user/', user_list, name='update_user'),
+
+
     path("password/", auth_views.PasswordChangeView.as_view(template_name='login/password_change.html'),
          name='password'),
     path("password/done/", auth_views.PasswordChangeDoneView.as_view(template_name='login/password_change_done.html'),
          name='password_change_done'),
+
+
 ]
