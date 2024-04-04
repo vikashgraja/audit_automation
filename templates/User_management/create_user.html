@@ -1,0 +1,12 @@
+{% extends "Nav.html" %}
+{% load static %}
+
+{% block content %}
+<!-- create_user.html -->
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Create</button>
+</form>
+
+{% endblock content %}

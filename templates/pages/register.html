@@ -1,0 +1,121 @@
+{% extends "Nav.html" %}
+{% load static %}
+
+{% block content %}
+<!--<div class="container mt-5">-->
+<!--    &lt;!&ndash; Registration form &ndash;&gt;-->
+<!--    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">-->
+<!--        {% csrf_token %}  &lt;!&ndash; CSRF token for security &ndash;&gt;-->
+
+<!--        &lt;!&ndash; Registration form heading &ndash;&gt;-->
+<!--        <h1 style="text-align: center;"><span style="color: green;">Register Auditor</span></h1>-->
+<!--        <h3>Register</h3>-->
+<!--        <hr>-->
+
+<!--        &lt;!&ndash; Display error/success messages &ndash;&gt;-->
+<!--        {% if messages %}-->
+<!--        <div class= "alert alert-primary" role="alert">-->
+<!--            {% for message in messages %}-->
+<!--            {{ message }}-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--        {% endif %}-->
+
+<!--        &lt;!&ndash; First Name input field &ndash;&gt;-->
+<!--        <div class="form-group">-->
+<!--            <label for="exampleInputEmail1">First name</label>-->
+<!--            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"-->
+<!--                placeholder="Enter First name" name="first_name" required>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Last Name input field &ndash;&gt;-->
+<!--        <div class="form-group">-->
+<!--            <label for="exampleInputEmail1">Last name</label>-->
+<!--            <input type="text" name="last_name" class="form-control" id="exampleInputEmail1"-->
+<!--                aria-describedby="emailHelp" placeholder="Enter Last name" required>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Username input field &ndash;&gt;-->
+<!--        <div class="form-group">-->
+<!--            <label for="exampleInputEmail1">Username</label>-->
+<!--            <input type="text" class="form-control" name="username" id="exampleInputEmail1"-->
+<!--                aria-describedby="emailHelp" placeholder="Enter email" required>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Password input field &ndash;&gt;-->
+<!--        <div class="form-group">-->
+<!--            <label for="exampleInputPassword1">Password</label>-->
+<!--            <input type="password" class="form-control" name="password" id="exampleInputPassword1"-->
+<!--                placeholder="Password" required>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Link to login page for users who already have an account &ndash;&gt;-->
+<!--&lt;!&ndash;            <p>Already have an account <a href="/login/">Login</a> </p>&ndash;&gt;-->
+
+<!--        &lt;!&ndash; Submit button &ndash;&gt;-->
+<!--        <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--    </form>-->
+<!--</div>-->
+<link rel="stylesheet" href='{% static "css/pass_change.css" %}'>
+
+<div class="main">
+        <h1>Register Auditor</h1>
+        <form id="id_password_change_form" method="POST">
+            {% csrf_token %}
+
+            <label for="new_user">
+                  Username:
+              </label>
+            <input type="text"
+                   id="new_user"
+                   name="username"
+                   required="true">
+
+            <label for="first_name">
+                  Email:
+              </label>
+            <input type="text"
+                   id="email"
+                   name="email"
+                   required="true">
+
+            <label for="first_name">
+                  First name:
+              </label>
+            <input type="text"
+                   id="first_name"
+                   name="first_name"
+                   required="true">
+
+            <label for="last_name">
+                  Last name:
+              </label>
+            <input type="text"
+                   id="last_name"
+                   name="last_name"
+                   required="true">
+
+             <label for="new_password">
+                 password:
+              </label>
+            <input type="password"
+                   id="new_password"
+                   name="password"
+                   required="true">
+
+            <div class="wrap">
+                <button type="submit"
+                        onclick="solve()">
+                    Submit
+                </button>
+            </div>
+        </form>
+        <p>
+            {% for field in form %}
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+            {% endfor %}
+        </p>
+</div>
+{% endblock content %}
