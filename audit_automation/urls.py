@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from interface.views import * #login_page, home, user_logout
-from user_management.views import user_list
+from user_management.views import user_list, deleteuser, changeadmin, register_user
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -30,8 +30,10 @@ urlpatterns = [
     path('learn/', learn, name="learn"),
     path('register/', register_user, name='register'),
     path('user_list/', user_list, name='user_list'),
-    path('delete_user/', user_list, name='delete_user'),
-    path('update_user/', user_list, name='update_user'),
+
+    path('update_user/<str:username>', user_list, name='update_user'),
+    path('delete_user/<str:username>', deleteuser, name='delete_user'),
+    path('update_admin/<str:username>', changeadmin, name='update_admin'),
 
 
     path("password/", auth_views.PasswordChangeView.as_view(template_name='login/password_change.html'),

@@ -2,9 +2,33 @@
 {% load static %}
 <!--https://reintech.io/blog/creating-a-custom-user-management-system-in-django-->
 {% block content %}
-<!-- user_list.html -->
-{% for user in users %}
-  <p>{{ user }}</p>
-{% endfor %}
+
+
 <a href="{% url 'register' %}">Add Auditors</a>
+
+<table border="2">
+    <tr>
+        <th>Username</th>
+        <th>E-Mail</th>
+        <th>Name</th>
+        <th>Admin</th>
+    </tr>
+
+    {% for user in users %}
+    <tr>
+        <td> {{user.username}} </td>
+        <td> {{user.email}} </td>
+        <td> {{user.first_name}} {{user.last_name}}</td>
+        <td> {{user.is_superuser}} </td>
+        <td> <a href="{% url 'delete_user' username=user.username %}" onclick="return confirm('Are You Sure')"> Delete </a></td>
+        <td> <a href="{% url 'update_admin' username=user.username %}" onclick="return confirm('Are You Sure')"> Change Admin </a></td>
+
+    </tr>
+    {% empty %}
+    <tr>
+        <td> No Data Found </td>
+    </tr>
+    {% endfor %}
+</table>
+
 {% endblock content %}

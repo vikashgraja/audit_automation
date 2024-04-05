@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'user_management.User'
+SESSION_COOKIE_AGE = 1800  # 30 minutes (in seconds)
 
 # Application definition
 

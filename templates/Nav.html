@@ -21,7 +21,7 @@
         <li><a href="{% url 'automation' %}">Automation</a></li>
         <li><a href="{% url 'learn' %}">Learn</a></li>
         {% if user.is_superuser %}
-        <li><a href="#">Users</a></li>
+        <li><a href="{% url 'user_list' %}">Users</a></li>
         <li><a href="#">Task</a></li>
         {% endif %}
         <li><a href="{% url 'password' %}">Change Password</a></li>
