@@ -14,45 +14,14 @@ def register_user(request):
     # Check if the HTTP request method is POST (form submission)
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
+        print('formed')
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
-            # load the profile instance created by the signal
             user.save()
-
-        #     username = request.POST.get('username')
-        #     email = request.POST.get('email')
-        #     first_name = request.POST.get('first_name')
-        #     last_name = request.POST.get('last_name')
-        #     password = request.POST.get('password')
-        #     is_admin = request.POST.get('Admin')
-        #     if not request.GET.get('Admin', None) == None:
-        #         print(is_admin)
-        #
-        # # Check if a user with the provided username already exists
-        #     user = User.objects.filter(username=username)
-        #
-        #     if user.exists():
-        #     # Display an information message if the username is taken
-        #     # messages.info(request, "Username already taken!")
-        #         return redirect('/register/')
-        #
-        # # Create a new User object with the provided information
-        #     user = User.objects.create_user(
-        #         first_name=first_name,
-        #         last_name=last_name,
-        #         username=username,
-        #         email=email
-        #     )
-        #
-        # # Set the user's password and save the user object
-        #     user.set_password(password)
-        #     user.save()
-        #
-        # # Display an information message indicating successful account creation
-        # # messages.info(request, "Auditor created Successfully!")
             return redirect('/register/')
     else:
+        print("not ok")
         form = UserCreationForm()
 
     # Render the registration page template (GET request)

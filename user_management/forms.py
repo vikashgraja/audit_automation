@@ -5,7 +5,7 @@ from user_management.models import User
 class UserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ["username", "email",'first_name','last_name','password']
+        fields = ["username", "email",'first_name','last_name']
 
 # class UserChangeForm(UserChangeForm):
 #     class Meta:

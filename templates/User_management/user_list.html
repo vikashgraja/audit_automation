@@ -20,8 +20,8 @@
         <td> {{user.email}} </td>
         <td> {{user.first_name}} {{user.last_name}}</td>
         <td> {{user.is_superuser}} </td>
-        <td> <a href="{% url 'delete_user' username=user.username %}" onclick="return confirm('Are You Sure')"> Delete </a></td>
-        <td> <a href="{% url 'update_admin' username=user.username %}" onclick="return confirm('Are You Sure')"> Change Admin </a></td>
+        <td> <a href="{% url 'delete_user' username=user.username %}" onclick="return confirm('Are You Sure to delete {{user.username}}')"> Delete </a></td>
+        <td> <a href="{% url 'update_admin' username=user.username %}" onclick="return confirm('Change Admin for {{user}}')"> Change Admin </a></td>
 
     </tr>
     {% empty %}
