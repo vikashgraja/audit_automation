@@ -58,7 +58,7 @@ def automate(request):
 def learn(request):
     return render(request, "pages/learn.html")
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def addredflag(request):
     if request.method == "POST":
         form = RedFlagForm(request.POST)
@@ -69,13 +69,13 @@ def addredflag(request):
         form = RedFlagForm()
     return render(request, 'pages/create_red_flag.html', {'form': form})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def delete_redflag(request, flag):
     redflag = redflags.objects.get(id=flag)
     redflag.delete()
     return redirect("redflag")
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def edit_redflag(request, flag):
     redflag = redflags.objects.get(id=flag)
 

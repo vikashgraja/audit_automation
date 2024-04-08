@@ -2,12 +2,35 @@
 {% load static %}
 
 {% block content %}
-<h1 class="title1">Dashboard</h1><br><br><br>
-  <!-- <p>Lorem ipsum dolor sit amet,<br> illum definitiones no quo,<br> maluisset concludaturque et eum,<br> altera fabulas ut quo.<br><br>Atqui causae gloriatur ius te,<br> id agam omnis evertitur eum.<br><br>Affert laboramus repudiandae nec et.<br><br>Inciderint efficiantur his ad.<br><br>Eum no molestiae voluptatibus.</p>
-  <p>Lorem ipsum dolor sit amet,<br> illum definitiones no quo,<br> maluisset concludaturque et eum,<br> altera fabulas ut quo.<br><br>Atqui causae gloriatur ius te,<br> id agam omnis evertitur eum.<br><br>Affert laboramus repudiandae nec et.<br><br>Inciderint efficiantur his ad.<br><br>Eum no molestiae voluptatibus.</p>
-  <p>Lorem ipsum dolor sit amet,<br> illum definitiones no quo,<br> maluisset concludaturque et eum,<br> altera fabulas ut quo.<br><br>Atqui causae gloriatur ius te,<br> id agam omnis evertitur eum.<br><br>Affert laboramus repudiandae nec et.<br><br>Inciderint efficiantur his ad.<br><br>Eum no molestiae voluptatibus.</p>
-  <p>Lorem ipsum dolor sit amet,<br> illum definitiones no quo,<br> maluisset concludaturque et eum,<br> altera fabulas ut quo.<br><br>Atqui causae gloriatur ius te,<br> id agam omnis evertitur eum.<br><br>Affert laboramus repudiandae nec et.<br><br>Inciderint efficiantur his ad.<br><br>Eum no molestiae voluptatibus.</p>
-  <p>Lorem ipsum dolor sit amet,<br> illum definitiones no quo,<br> maluisset concludaturque et eum,<br> altera fabulas ut quo.<br><br>Atqui causae gloriatur ius te,<br> id agam omnis evertitur eum.<br><br>Affert laboramus repudiandae nec et.<br><br>Inciderint efficiantur his ad.<br><br>Eum no molestiae voluptatibus.</p>
-  <p>Lorem ipsum dolor sit amet,<br> illum definitiones no quo,<br> maluisset concludaturque et eum,<br> altera fabulas ut quo.<br><br>Atqui causae gloriatur ius te,<br> id agam omnis evertitur eum.<br><br>Affert laboramus repudiandae nec et.<br><br>Inciderint efficiantur his ad.<br><br>Eum no molestiae voluptatibus.</p>
-  <p>Lorem ipsum dolor sit amet,<br> illum definitiones no quo,<br> maluisset concludaturque et eum,<br> altera fabulas ut quo.<br><br>Atqui causae gloriatur ius te,<br> id agam omnis evertitur eum.<br><br>Affert laboramus repudiandae nec et.<br><br>Inciderint efficiantur his ad.<br><br>Eum no molestiae voluptatibus.</p> -->
+<h1 class="title1">Dashboard</h1><br><br>
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+{#    <div class="container ">#}
+        <table border="2">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Auditor name</th>
+                    <th>Auditee Dept</th>
+                    <th>Audit Schedule</th>
+                    <th>Status</th>
+                    <th>Completion</th>
+                </tr>
+            </thead>
+{#            {% if request.user.is_superuser %}#}
+{#                <tfoot>#}
+{#                    <tr>#}
+{#                        <th colspan='8'>#}
+{#                            <a class='button' href="{% url 'add_redflag' %}">Add Red Flag</a>#}
+{#                        </th>#}
+{#                    </tr>#}
+{#                </tfoot>#}
+{#            {% endif %}#}
+{#            {% for flag in flags %}#}
+{#                <tr>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+        </table>
+{#    </div>#}
+
 {% endblock content %}
