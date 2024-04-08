@@ -28,7 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'user_management.User'
-SESSION_COOKIE_AGE = 1800  # 30 minutes (in seconds)
+SESSION_COOKIE_AGE = 180000  # 30 minutes (in seconds)
+LOGIN_REDIRECT_URL ='/'
 
 # Application definition
 

@@ -3,94 +3,93 @@
 
 {% block content %}
 <link rel="stylesheet" href='{% static "css/pass_change.css" %}'>
-
-<div class="main">
-    <h1>Register Auditor</h1>
-    <form id="id_password_change_form" method="POST">
-        {% csrf_token %}
-
-        <label for="username">
-            Username:
-        </label>
-        <input type="text"
-                id="username"
-                name="username"
-                required="true">
-
-        <label for="email">
-            Email:
-        </label>
-        <input type="text"
-                id="email"
-                name="email"
-                required="true">
-
-        <label for="first_name">
-            First Name:
-        </label>
-        <input type="text"
-                id="first_name"
-                name="first_name"
-                required="true">
-
-        <label for="last_name">
-            Last Name:
-        </label>
-        <input type="text"
-                id="last_name"
-                name="last_name"
-                required="true">
-
-        <label for="password1">
-            Password:
-        </label>
-        <input type="password"
-                id="password1"
-                name="password1"
-                required="true">
-
-        <label for="password2">
-            Retype Password:
-        </label>
-        <input type="password"
-                id="password2"
-                name="password2"
-                required="true">
-
-
-<!--        {% for field in form %}-->
-<!--            {{field}}-->
-<!--        {% endfor %}-->
-
-
-
-<!--        <div class="checkbox-wrapper-4">-->
-<!--            <input class="inp-cbx" id="Admin" type="checkbox"/>-->
-<!--            <label class="cbx" for="Admin">-->
-<!--                <span>-->
-<!--                    <svg width="12px" height="10px">-->
-<!--                    <use xlink:href="#check-4"></use>-->
-<!--                    </svg>-->
-<!--                </span>-->
-<!--                <span>Admin</span>-->
-<!--            </label>-->
-<!--            <svg class="inline-svg">-->
-<!--                <symbol id="check-4" viewbox="0 0 12 10">-->
-<!--                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>-->
-<!--                </symbol>-->
-<!--            </svg>-->
-<!--        </div>-->
-
-        <div class="wrap">
-            <button type="submit">
-                Submit
-            </button>
-        </div>
-    </form>
-    {% for field in form %}
-        {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
+    
+    <div class="main">
+        <h1>Register Auditor</h1>
+        <form id="User_register_form" method="POST">
+            {% csrf_token %}
+    
+            <label for="username">
+                Username:
+            </label>
+            <input type="text"
+                    id="username"
+                    name="username"
+                    required="true">
+    
+            <label for="email">
+                Email:
+            </label>
+            <input type="text"
+                    id="email"
+                    name="email"
+                    required="true">
+    
+            <label for="first_name">
+                First Name:
+            </label>
+            <input type="text"
+                    id="first_name"
+                    name="first_name"
+                    required="true">
+    
+            <label for="last_name">
+                Last Name:
+            </label>
+            <input type="text"
+                    id="last_name"
+                    name="last_name">
+    
+            <label for="password1">
+                Password:
+            </label>
+            <input type="password"
+                    id="password1"
+                    name="password1"
+                    required="true">
+    
+            <label for="password2">
+                Retype Password:
+            </label>
+            <input type="password"
+                    id="password2"
+                    name="password2"
+                    required="true">
+    
+    
+    <!--        {% for field in form %}-->
+    <!--            {{field}}-->
+    <!--        {% endfor %}-->
+    
+    
+    
+    <!--        <div class="checkbox-wrapper-4">-->
+    <!--            <input class="inp-cbx" id="Admin" type="checkbox"/>-->
+    <!--            <label class="cbx" for="Admin">-->
+    <!--                <span>-->
+    <!--                    <svg width="12px" height="10px">-->
+    <!--                    <use xlink:href="#check-4"></use>-->
+    <!--                    </svg>-->
+    <!--                </span>-->
+    <!--                <span>Admin</span>-->
+    <!--            </label>-->
+    <!--            <svg class="inline-svg">-->
+    <!--                <symbol id="check-4" viewbox="0 0 12 10">-->
+    <!--                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>-->
+    <!--                </symbol>-->
+    <!--            </svg>-->
+    <!--        </div>-->
+    
+            <div class="wrap">
+                <button type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-</div>
+    </div>
 {% endblock content %}

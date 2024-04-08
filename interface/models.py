@@ -1,5 +1,5 @@
 from django.db import models
-
+from user_management.models import User
 
 # Create your models here.
 
@@ -7,7 +7,13 @@ from django.db import models
 class redflags(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=250)
-    username = models.CharField(max_length=30)
-    userid = models.IntegerField()
+    assigned_to = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
-    manuals = models.FileField(upload_to='manuals/')
+    lastrun = models.DateField(null=True, blank=True)
+    # manuals = models.FileField(upload_to='manuals/')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['created_at']

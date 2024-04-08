@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-# from django.contrib.auth.models import User
 from user_management.models import User
+from interface.models import redflags
 from django.contrib import messages
+from .forms import RedFlagForm
 
 
 # from django.http import HttpResponse
@@ -38,7 +40,13 @@ def user_logout(request):
 
 @login_required(login_url='login')
 def red_flag(request):
-    return render(request, "pages/red_flag.html")
+    user = request.user
+    if user.is_superuser:
+        flags = redflags.objects.all()
+    else:
+        flags = redflags.objects.filter(assigned_to=user)
+    context = {'flags': flags}
+    return render(request, "pages/red_flag.html", context=context)
 
 
 @login_required(login_url='login')
@@ -51,3 +59,34 @@ def learn(request):
     return render(request, "pages/learn.html")
 
 
+def addredflag(request):
+    if request.method == "POST":
+        form = RedFlagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/add_redflag/')
+    else:
+        form = RedFlagForm()
+    return render(request, 'pages/create_red_flag.html', {'form': form})
+
+
+def delete_redflag(request, flag):
+    redflag = redflags.objects.get(id=flag)
+    redflag.delete()
+    return redirect("redflag")
+
+
+def edit_redflag(request, flag):
+    redflag = redflags.objects.get(id=flag)
+
+    if request.method == 'POST':
+        form = RedFlagForm(request.POST, instance=redflag)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('redflag')
+    else:
+        form = RedFlagForm(instance=redflag)
+
+    return render(request, 'pages/edit_red_flag.html', {'form': form})

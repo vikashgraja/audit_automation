@@ -2,8 +2,40 @@
 {% load static %}
 
 {% block content %}
+    
 <h1 class="title1">Red Flag</h1><br><br><br>
-
-<iframe src="http://10.54.194.250:8501" name="iframe_a" height="1000px" width="100%" title="Iframe Example"></iframe>
+    
+    {% if request.user.is_superuser %}
+        <a href="{% url 'add_redflag' %}">Add Red Flag</a>
+    {% endif %}
+    
+    <br><br>
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+    <div class="container ">
+        <table border="2">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>In-Charge</th>
+                    <th>Created on</th>
+                    <th>Lastrun</th>
+                </tr>
+            </thead>
+            {% for flag in flags %}
+                <tr>
+                <td>{{ flag.name }}</td>
+                <td>{{ flag.description }}</td>
+                <td>{{ flag.assigned_to }}</td>
+                <td>{{ flag.created_at }}</td>
+                <td>{{ flag.lastrun }}</td>
+                    {% if request.user.is_superuser %}
+                        <td> <a href="{% url 'edit_rf' flag=flag.id %}"> Edit </a></td>
+                        <td> <a href="{% url 'delete_rf' flag=flag.id %}" onclick="return confirm('Are You Sure to delete {{ flag.name }}')"> Delete </a></td>
+                    {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
 {% endblock content %}

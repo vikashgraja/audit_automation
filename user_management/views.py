@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
-from .forms import UserCreationForm
+from .forms import UserCreationForm, UserChangeForm
 from .models import User
+from django.contrib import messages
 
-
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def user_list(request):
     users = User.objects.all()
     return render(request, 'User_management/user_list.html', {'users': users})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def register_user(request):
     # Check if the HTTP request method is POST (form submission)
     if request.method == 'POST':
@@ -19,22 +19,22 @@ def register_user(request):
             user = form.save()
             user.refresh_from_db()
             user.save()
-            return redirect('/register/')
+            # messages.success(request, 'User registered successfully')
+            return redirect('user_list')
     else:
-        print("not ok")
         form = UserCreationForm()
 
     # Render the registration page template (GET request)
     return render(request, 'User_management/create_user.html',{'form': form})
 
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def deleteuser(request, username):
     user = User.objects.get(username=username)
     user.delete()
     return redirect("user_list")
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def changeadmin(request, username):
     user = User.objects.get(username=username)
     if user.is_superuser == False:
@@ -48,3 +48,23 @@ def changeadmin(request, username):
         user.is_superuser = False
         user.save()
     return redirect("user_list")
+
+
+@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
+def edit_user(request, username):
+    user = User.objects.get(username=username)
+
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=user)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('user_list')
+    else:
+        form = UserChangeForm(instance=user)
+
+    return render(request, 'User_management/update_user.html', {'form': form})
+
+def unauthorized(request):
+    return render(request, 'User_management/403.html')

@@ -17,29 +17,34 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from interface.views import * #login_page, home, user_logout
-from user_management.views import user_list, deleteuser, changeadmin, register_user
+from interface import views as interface_views
+from user_management import views as user_management_views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('login/', login_page, name='login'),
-    path('logout/', user_logout, name='logout'),
-    path('', home, name='home'),
-    path('redflag/', red_flag, name ="redflag"),
-    path('automation/', automate, name="automation"),
-    path('learn/', learn, name="learn"),
-    path('register/', register_user, name='register'),
-    path('user_list/', user_list, name='user_list'),
+    path('login/', interface_views.login_page, name='login'),
+    path('logout/', interface_views.user_logout, name='logout'),
+    path('', interface_views.home, name='home'),
 
-    path('update_user/<str:username>', user_list, name='update_user'),
-    path('delete_user/<str:username>', deleteuser, name='delete_user'),
-    path('update_admin/<str:username>', changeadmin, name='update_admin'),
+    path('redflag/', interface_views.red_flag, name="redflag"),
+    path('add_redflag/', interface_views.addredflag, name="add_redflag"),
+    path('deleterf/<str:flag>', interface_views.delete_redflag, name='delete_rf'),
+    path('editrf/<str:flag>', interface_views.edit_redflag, name='edit_rf'),
 
+
+    path('automation/', interface_views.automate, name="automation"),
+    path('learn/', interface_views.learn, name="learn"),
+
+
+    path('register/', user_management_views.register_user, name='register'),
+    path('user_list/', user_management_views.user_list, name='user_list'),
+    path('edit_user/<str:username>', user_management_views.edit_user, name='edit_user'),
+    path('delete_user/<str:username>', user_management_views.deleteuser, name='delete_user'),
+    path('update_admin/<str:username>', user_management_views.changeadmin, name='update_admin'),
+    path('unauthorized/', user_management_views.unauthorized, name='unauthorized'),
 
     path("password/", auth_views.PasswordChangeView.as_view(template_name='login/password_change.html'),
-         name='password'),
+            name='password'),
     path("password/done/", auth_views.PasswordChangeDoneView.as_view(template_name='login/password_change_done.html'),
-         name='password_change_done'),
-
-
+            name='password_change_done'),
 ]

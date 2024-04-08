@@ -2,51 +2,56 @@
 
 {% load static %}
 
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-     <title>Plant Audit</title>
-      <link rel="stylesheet" href="{% static 'css/nav.css' %}">
-   </head>
-<body>
-
-  <nav>
-    <div class="nav-content">
-      <div class="logo">
-        <a>HYUNDAI</a>
-      </div>
-      <ul class="nav-links">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'redflag' %}">Red Flag</a></li>
-        <li><a href="{% url 'automation' %}">Automation</a></li>
-        <li><a href="{% url 'learn' %}">Learn</a></li>
-        {% if user.is_superuser %}
-        <li><a href="{% url 'user_list' %}">Users</a></li>
-        <li><a href="#">Task</a></li>
-        {% endif %}
-        <li><a href="{% url 'password' %}">Change Password</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-      </ul>
-    </div>
-  </nav>
-<!--  <section class="home"></section>-->
-
-  <div class="content">
-    {% block content %}
-    {% endblock %}
-  </div>
-
-</body>
-  
-  <script>
-  let nav = document.querySelector("nav");
-    window.onscroll = function() {
-      if(document.documentElement.scrollTop > 20){
-        nav.classList.add("sticky");
-      }else {
-        nav.classList.remove("sticky");
-      }
+    <html lang="en" dir="ltr">
+        <head>
+            <meta charset="UTF-8">
+            <title>Plant Audit</title>
+            <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+        </head>
+    <body>
+    
+        <nav>
+            <div class="nav-content">
+                <div class="logo">
+                    <a>HYUNDAI</a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'redflag' %}">Red Flag</a></li>
+                    <li><a href="{% url 'automation' %}">Automation</a></li>
+                    <li><a href="{% url 'learn' %}">Learn</a></li>
+                    {% if user.is_superuser %}
+                    <li><a href="{% url 'user_list' %}">Users</a></li>
+                    <li><a href="#">Task</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'password' %}">Change Password</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    <!--  <section class="home"></section>-->
+    
+        <div class="content">
+            {% if messages %}
+                {% for message in messages %}
+                    ｛｛ message ｝｝
+                {% endfor %}
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+        </div>
+    
+    </body>
+        
+    <script>
+    let nav = document.querySelector("nav");
+        window.onscroll = function() {
+        if(document.documentElement.scrollTop > 20){
+            nav.classList.add("sticky");
+        }else {
+            nav.classList.remove("sticky");
+        }
     }
-  </script>
-
+    </script>
+    
 </html>
