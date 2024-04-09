@@ -8,7 +8,8 @@
         <table border="2">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>S.No</th>
+                    <th>Audit Name</th>
                     <th>Description</th>
                     <th>Auditor name</th>
                     <th>Auditee Dept</th>
@@ -17,19 +18,21 @@
                     <th>Completion</th>
                 </tr>
             </thead>
-{#            {% if request.user.is_superuser %}#}
-{#                <tfoot>#}
-{#                    <tr>#}
-{#                        <th colspan='8'>#}
-{#                            <a class='button' href="{% url 'add_redflag' %}">Add Red Flag</a>#}
-{#                        </th>#}
-{#                    </tr>#}
-{#                </tfoot>#}
-{#            {% endif %}#}
-{#            {% for flag in flags %}#}
-{#                <tr>#}
-{#                </tr>#}
-{#            {% endfor %}#}
+            <tr>
+                <td>1</td>
+                <td>CL Bus Usage</td>
+                <td>HMIL bus unauthorised usage by CL employees</td>
+                <td>Vishnu B</td>
+                <td>Business Support</td>
+                <td WIDTH="22%">
+                    <li><b>Planing</b> : 12.12.12</li>
+                    <li><b>Analysis</b> : 12.12.12</li>
+                    <li><b>Auditee Preview</b> : 12.12.12</li>
+                    <li><b>MD Approval</b> : 12.12.12</li>
+                </td>
+                <td>Analysis</td>
+                <td WIDTH="7%">70%</td>
+            </tr>
         </table>
 {#    </div>#}
 

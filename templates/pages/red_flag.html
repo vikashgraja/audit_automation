@@ -10,6 +10,7 @@
         <table border="2">
             <thead>
                 <tr>
+                    <th>S.No</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>In-Charge</th>
@@ -28,18 +29,19 @@
             {% endif %}
             {% for flag in flags %}
                 <tr>
-                <td>{{ flag.name }}</td>
-                <td>{{ flag.description }}</td>
-                <td>{{ flag.assigned_to }}</td>
-                <td>{{ flag.created_at }}</td>
-                <td>{{ flag.lastrun }}</td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ flag.name }}</td>
+                    <td>{{ flag.description }}</td>
+                    <td>{{ flag.assigned_to }}</td>
+                    <td>{{ flag.created_at }}</td>
+                    <td>{{ flag.lastrun }}</td>
                     {% if request.user.is_superuser %}
                         <td class='select'> 
                             <a class='button' href="{% url 'edit_rf' flag=flag.id %}"> Edit </a>
                             <a class='button' href="{% url 'delete_rf' flag=flag.id %}" onclick="return confirm('Are You Sure to delete {{ flag.name }}')"> Delete </a>
                         </td>
                     {% endif %}
-            </tr>
+                </tr>
             {% endfor %}
         </table>
 {#    </div>#}

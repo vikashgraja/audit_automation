@@ -9,6 +9,7 @@
 <table border="2">
     <thead>
         <tr>
+            <th>S.No</th>
             <th>Username</th>
             <th>E-Mail</th>
             <th>Name</th>
@@ -24,6 +25,7 @@
     </tfoot>
     {% for user in users %}
     <tr>
+        <td>{{ forloop.counter }}</td>
         <td> {{user.username}} </td>
         <td> {{user.email}} </td>
         <td> {{user.first_name}} {{user.last_name}}</td>
@@ -33,11 +35,7 @@
             <a class='button' href="{% url 'delete_user' username=user.username %}" onclick="return confirm('Are You Sure to delete {{user.username}}')"> Delete User</a>
             <a class='button' href="{% url 'update_admin' username=user.username %}" onclick="return confirm('Change Admin for {{user}}')"> Change Admin Status</a>
         </td>
-
     </tr>
-{#    <tr>#}
-{#        <td> No Data Found </td>#}
-{#    </tr>#}
     {% endfor %}
 </table>
 
