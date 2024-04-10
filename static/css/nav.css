@@ -10,11 +10,12 @@ nav{
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px;
+  padding: 15px ;
   transition: all 0.4s ease;
+  background: #002c5f;
 }
 nav.sticky{
-  padding: 15px 20px;
+  padding: 15px;
   background: #002c5f;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
@@ -29,7 +30,7 @@ nav .nav-content{
 nav .logo a{
   font-weight: 500;
   font-size: 35px;
-  color: #002c5f;
+  color: #fff;
 }
 nav.sticky .logo a{
   color: #fff;
@@ -43,7 +44,7 @@ nav.sticky .logo a{
 }
  .nav-links li a{
   text-decoration: none;
-  color: #002c5f;
+  color: #fff;
   font-size: 18px;
   font-weight: 500;
   padding: 10px 4px;
@@ -70,5 +71,5 @@ nav.sticky .logo a{
 }
 
 .content {
-  padding: 100px;
+  padding: 75px;
 }

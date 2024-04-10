@@ -28,6 +28,11 @@
                     <li><b>Auditee Preview</b> : 28.02.24</li>
                     <li><b>MD Approval</b> : 5.03.24</li>
                 </td>
+                {% if request.user.is_superuser %}
+                <td>Preview</td>
+                <td>80%</td>
+                {% endif %}
+                {% if not request.user.is_superuser %}
                 <td>
                     <select name="status" id="status1">
                         <option value="Planing">Planing</option>
@@ -39,6 +44,7 @@
                 <td WIDTH="7%">
                     <input type="text" value="70%" size="3">
                 </td>
+                {% endif %}
                 {% if request.user.is_superuser %}
                 <td class='select'>
                     <a class='button' href="#"> Edit </a>
@@ -58,17 +64,23 @@
                     <li><b>Auditee Preview</b> : 28.02.24</li>
                     <li><b>MD Approval</b> : 5.03.24</li>
                 </td>
+                {% if request.user.is_superuser %}
+                <td>Analysis</td>
+                <td>50%</td>
+                {% endif %}
+                {% if not request.user.is_superuser %}
                 <td>
                     <select name="status" id="status2">
                         <option value="Planing">Planing</option>
                         <option value="Analysis">Analysis</option>
-                        <option value="Auditee Preview">Auditee Preview</option>
-                        <option value="MD Approval">MD Approval</option>
+                        <option value="Preview">Auditee Preview</option>
+                        <option value="Approval">MD Approval</option>
                     </select>
                 </td>
                 <td WIDTH="7%">
                     <input type="text" value="50%" size="3">
                 </td>
+                {% endif %}
                 {% if request.user.is_superuser %}
                 <td class='select'>
                     <a class='button' href="#"> Edit </a>
