@@ -47,4 +47,6 @@ urlpatterns = [
             name='password'),
     path("password/done/", auth_views.PasswordChangeDoneView.as_view(template_name='login/password_change_done.html'),
             name='password_change_done'),
+
+    path('download_manual/<str:flag>/', interface_views.download_manual, name='download_manual'),
 ]

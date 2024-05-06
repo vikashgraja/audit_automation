@@ -5,12 +5,10 @@
     <div class="edit-tasks">
         <h1>Edit task</h1>
 
-        <form method="post">
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <button>Submit</button>
-        </form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
     </div>
 {% endblock %}
