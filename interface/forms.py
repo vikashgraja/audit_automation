@@ -6,7 +6,7 @@ import django.forms as forms
 class RedFlagForm(ModelForm):
     class Meta:
         model = redflags
-        fields = ['name', 'description', 'assigned_to']
+        fields = ['name', 'description', 'assigned_to', 'manual']
 
         assigned_to = forms.ModelChoiceField(queryset=redflags.objects.all(), empty_label="Select Auditor",
                                             widget=forms.Select(attrs={
@@ -14,4 +14,3 @@ class RedFlagForm(ModelForm):
                                                 'style': 'max-width: auto;',
                                             }))
 
-        # manual = forms.FileInput()

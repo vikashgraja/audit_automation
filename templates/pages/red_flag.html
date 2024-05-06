@@ -36,7 +36,9 @@
                     <td>{{ flag.created_at }}</td>
                     <td>{{ flag.lastrun }}</td>
                     <td class='select'>
-                        <a class='button' href="#"> Manual </a>
+                        {% if flag.manual %}
+                            <a class='button' href="{% url 'download_manual' flag=flag.id %}"> Manual </a>
+                        {% endif %}
                         {% if request.user.is_superuser %}
                             <a class='button' href="{% url 'edit_rf' flag=flag.id %}"> Edit </a>
                             <a class='button' href="{% url 'delete_rf' flag=flag.id %}" onclick="return confirm('Are You Sure to delete {{ flag.name }}')"> Delete </a>

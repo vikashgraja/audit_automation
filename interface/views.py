@@ -6,9 +6,7 @@ from user_management.models import User
 from interface.models import redflags
 from django.contrib import messages
 from .forms import RedFlagForm
-
-
-# from django.http import HttpResponse
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -61,10 +59,10 @@ def learn(request):
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def addredflag(request):
     if request.method == "POST":
-        form = RedFlagForm(request.POST)
+        form = RedFlagForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('/add_redflag/')
+            return redirect('redflag')
     else:
         form = RedFlagForm()
     return render(request, 'pages/create_red_flag.html', {'form': form})
@@ -80,7 +78,7 @@ def edit_redflag(request, flag):
     redflag = redflags.objects.get(id=flag)
 
     if request.method == 'POST':
-        form = RedFlagForm(request.POST, instance=redflag)
+        form = RedFlagForm(request.POST,request.FILES, instance=redflag)
 
         if form.is_valid():
             form.save()
@@ -90,3 +88,10 @@ def edit_redflag(request, flag):
         form = RedFlagForm(instance=redflag)
 
     return render(request, 'pages/edit_red_flag.html', {'form': form})
+
+@login_required(login_url='login')
+def download_manual(request, flag):
+    redflag = redflags.objects.get(id=flag)
+    response = HttpResponse(redflag.manual, content_type='application/force-download')
+    response['Content-Disposition'] = f'attachment; filename="{redflag.manual.name}"'
+    return response
