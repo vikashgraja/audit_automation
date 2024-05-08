@@ -2,13 +2,17 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href='{% static "css/RF_create.css" %}'>
     <div class="edit-tasks">
+        <br>
         <h1>Edit task</h1>
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <div class="row">
+            <input type="submit" value="Update">
+        </div>
     </form>
     </div>
 {% endblock %}

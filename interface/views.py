@@ -27,13 +27,14 @@ def login_page(request):
 
 @login_required(login_url='login')
 def home(request):
-    return render(request, "pages/home.html")
+    return redirect('redflag')
+    # return render(request, "pages/home.html")
 
 
 def user_logout(request):
     logout(request)
     # messages.info(request, "Logged out successfully!")
-    return redirect("home")
+    return redirect("login")
 
 
 @login_required(login_url='login')
