@@ -2,8 +2,15 @@
 {% load static %}
 
 {% block content %}
-<h1 class="title1">Audit Automation</h1><br><br><br>
+<link rel="stylesheet" href="{% static 'css/automation.css' %}">
+<br>
+<h1 class="title1">Audit Automation</h1><br><br>
 
-<iframe src="http://10.54.194.181:8501" name="iframe_a" height="800px" width="100%" title="Iframe Example"></iframe>
+<section>
+  <div class="wrapper">
+    <button class="button --glow" onclick=" window.open('http://10.54.194.251:8502','_blank')">Vendor and CL DashBoard</button>
+    <button class="button --glow" onclick=" window.open('http://10.54.194.181:5000','_blank')">Search Bot</button>
+  </div>
+</section>
 
 {% endblock content %}

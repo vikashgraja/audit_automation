@@ -3,10 +3,14 @@
 
 {% block content %}
 <!-- update_user.html -->
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Update</button>
-</form>
-
+<link rel="stylesheet" href='{% static "css/RF_create.css" %}'>
+<div class="edit-tasks">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="row">
+      <input type="submit" value="Update">
+    </div>
+  </form>
+</div>
 {% endblock content %}

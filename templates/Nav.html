@@ -14,13 +14,14 @@
         <nav>
             <div class="nav-content">
                 <div class="logo">
-                    <img  src="{% static 'css/img/demo1.png' %}">
-{#                    <a>Audit Vertical</a>#}
+                    <img src="{% static 'css/img/Hyundai text.png' %}">
+                    <a>Audit 360<sup>o</sup></a>
                 </div>
                 <ul class="nav-links">
 <!--                    <li><a href="{% url 'home' %}">Home</a></li>-->
                     <li><a href="{% url 'redflag' %}">Red Flag</a></li>
-                    <li><a href="http://10.54.194.181:8501/" target='_blank'>Automation</a></li>
+<!--                    <li><a href="http://10.54.194.181:8501/" target='_blank'>Automation</a></li>-->
+                    <li><a href="{% url 'automation' %}">Automation</a></li>
                     <li><a href="{% url 'learn' %}">Learn</a></li>
                     {% if user.is_superuser %}
                     <li><a href="{% url 'user_list' %}">Users</a></li>

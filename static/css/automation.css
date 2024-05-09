@@ -1,0 +1,77 @@
+// --- css variables --- //
+:root {
+  --white: #ffffff;
+  --blue: #002c5f;
+  --primary: #a36b4f;
+}
+
+// --- styling --- //
+// fonts
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400|Montserrat:500|Montserrat:700);
+$font-family: "Montserrat", "Open Sans", sans-serif;
+
+// config
+$max-width: 992px;
+
+html,
+body {
+  font-family: $font-family;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--white);
+  // background-color: lighten-color(color-white, 0.9);
+  background-color: #00aad2;
+  margin: 0 auto;
+  scroll-behavior: smooth;
+  max-width: $max-width;
+  padding: 2.5rem 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  margin: 0 0 3rem;
+  color: var(--white);
+  text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.button {
+  position: relative;
+  border: 0;
+  transition: 0.5s;
+  z-index: 1;
+  min-width: 15rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  line-height: 1;
+  font-family: $font-family;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  background: #002c5f;
+  color: #ffffff;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+  }
+
+  &.--glow {
+    &:hover {
+      background: #a36b4f;
+      box-shadow: 0 0 5px #a36b4f, 0 0 25px #a36b4f;
+    }
+  }
+ }
+

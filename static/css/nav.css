@@ -10,18 +10,18 @@ nav{
   top: 0;
   left: 0;
   width: 100%;
-  padding: 15px ;
+  padding: 10px ;
   transition: all 0.4s ease;
   background: #002c5f;
 }
 nav.sticky{
-  padding: 15px;
+  padding: 10px;
   background: #002c5f;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 nav .nav-content{
   height: 100%;
-  max-width: 1200px;
+  max-width: 95%;
   margin: auto;
   display: flex;
   align-items: center;
@@ -70,8 +70,9 @@ nav.sticky .logo a{
   font-family: 'Ubuntu', sans-serif;
 }
 nav .logo img {
-    height: 40px;
+    height: 17px;
     width: auto;
+    margin-right: 20px
 }
 
 .content {

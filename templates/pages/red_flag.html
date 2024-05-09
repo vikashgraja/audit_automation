@@ -2,20 +2,19 @@
 {% load static %}
 
 {% block content %}
-    
-<h1 class="title1">Red Flag</h1>
-    <br><br>
     <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+<h1 class="title1">Red Flag</h1>
+    <br>
 {#    <div class="container ">#}
         <table border="2">
             <thead>
                 <tr>
-                    <th>S.No</th>
-                    <th >Category</th>
-                    <th >Name</th>
-                    <th style="width:10%">InCharge</th>
-                    <th style="width:12%">Created</th>
-                    <th style="width:20%">Lastrun</th>
+                    <th style="width:2%">S.No</th>
+                    <th style="width:10%">Category</th>
+                    <th style="width:25%">Name</th>
+                    <th>InCharge</th>
+                    <th style="width:10%">Created</th>
+                    <th style="width:17%">Lastrun</th>
                     <th style="width:13%">Action</th>
                 </tr>
             </thead>
@@ -34,8 +33,8 @@
                     <td>{{ flag.category }}</td>
                     <td>{{ flag.name }}</td>
                     <td>{{ flag.assigned_to }}</td>
-                    <td>{{ flag.created_at }}</td>
-                    <td>{{ flag.lastrun }}</td>
+                    <td>{{ flag.created_at|date:"d-m-Y" }}</td>
+                    <td>{{ flag.lastrun|date:"d/m/Y" }}-{{ flag.lastrun|time:"H:i:s" }}</td>
                     <td class='select'>
                         {% if flag.manual %}
                             <a class='button' href="{% url 'download_manual' flag=flag.id %}"> Manual </a>
