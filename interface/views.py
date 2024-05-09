@@ -8,6 +8,7 @@ from django.contrib import messages
 from .forms import RedFlagForm
 from django.http import HttpResponse
 
+
 # Create your views here.
 
 def login_page(request):
@@ -27,8 +28,8 @@ def login_page(request):
 
 @login_required(login_url='login')
 def home(request):
-    return redirect('redflag')
-    # return render(request, "pages/home.html")
+    # return redirect('redflag')
+    return render(request, "pages/home.html")
 
 
 def user_logout(request):
@@ -57,6 +58,7 @@ def automate(request):
 def learn(request):
     return render(request, "pages/learn.html")
 
+
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def addredflag(request):
     if request.method == "POST":
@@ -68,18 +70,20 @@ def addredflag(request):
         form = RedFlagForm()
     return render(request, 'pages/create_red_flag.html', {'form': form})
 
+
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def delete_redflag(request, flag):
     redflag = redflags.objects.get(id=flag)
     redflag.delete()
     return redirect("redflag")
 
+
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def edit_redflag(request, flag):
     redflag = redflags.objects.get(id=flag)
 
     if request.method == 'POST':
-        form = RedFlagForm(request.POST,request.FILES, instance=redflag)
+        form = RedFlagForm(request.POST, request.FILES, instance=redflag)
 
         if form.is_valid():
             form.save()
@@ -89,6 +93,7 @@ def edit_redflag(request, flag):
         form = RedFlagForm(instance=redflag)
 
     return render(request, 'pages/edit_red_flag.html', {'form': form})
+
 
 @login_required(login_url='login')
 def download_manual(request, flag):
