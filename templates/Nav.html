@@ -7,16 +7,18 @@
             <meta charset="UTF-8">
             <title>Audit Portal</title>
             <link rel="shortcut icon" href="{% static 'css/img/favicon.png' %}">
-            <link rel="stylesheet" href="{% static 'css/nav.css' %}">
         </head>
     <body>
-    
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
         <nav>
             <div class="nav-content">
                 <div class="logo">
-                    <img src="{% static 'css/img/Hyundai text.png' %}">
-                    <a><b>Audit 360&deg;</b></a>
+                    <img src="{% static 'css/img/logo__hyundai--light.svg' %}">
+<!--                    <a>AUDIT 360&deg;</a>-->
                 </div>
+<!--                <div class="logo">-->
+<!--                    <a>AUDIT 360&deg;</a>-->
+<!--                </div>-->
                 <ul class="nav-links">
                     <li><a href="{% url 'home' %}">Audit Mgmt</a></li>
                     <li><a href="{% url 'redflag' %}">Red Flag</a></li>
@@ -45,16 +47,4 @@
         </div>
     
     </body>
-        
-    <script>
-    let nav = document.querySelector("nav");
-        window.onscroll = function() {
-        if(document.documentElement.scrollTop > 20){
-            nav.classList.add("sticky");
-        }else {
-            nav.classList.remove("sticky");
-        }
-    }
-    </script>
-    
 </html>

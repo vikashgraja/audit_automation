@@ -5,20 +5,16 @@
   text-decoration: none;
   font-family: 'Ubuntu', sans-serif;
 }
+
 nav{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   padding: 10px ;
-  transition: all 0.4s ease;
   background: #002c5f;
 }
-nav.sticky{
-  padding: 10px;
-  background: #002c5f;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
+
 nav .nav-content{
   height: 100%;
   max-width: 95%;
@@ -27,17 +23,34 @@ nav .nav-content{
   align-items: center;
   justify-content: space-between;
 }
+
+/*
+nav .logo{
+  align-items: center;
+  justify-content: center;
+}
+*/
+
 nav .logo a{
-  font-weight: 500;
-  font-size: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 10px 4px;
   color: #fff;
 }
-nav.sticky .logo a{
-  color: #fff;
+
+nav .logo img {
+    height: 18px;
+    width: auto;
+    /* width: 100%;
+    margin-top: 8px;
+    margin-right: 20px;*/
 }
+
 .nav-content .nav-links{
   display: flex;
 }
+
 .nav-content .nav-links li{
   list-style: none;
   margin: 0 8px;
@@ -45,35 +58,15 @@ nav.sticky .logo a{
  .nav-links li a{
   text-decoration: none;
   color: #fff;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   padding: 10px 4px;
   transition: all 0.3s ease;
 }
+
  .nav-links li a:hover{
    color: #00aad2;
  }
- nav.sticky .nav-links li a{
-   color: #fff;
-   transition: all 0.4s ease;
-}
- nav.sticky .nav-links li a:hover{
-  color: #00aad2;
-}
-.home{
-  height: 25vh;
-  width: 100%;
-  /*background: url("images/background.png") no-repeat;*/
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  font-family: 'Ubuntu', sans-serif;
-}
-nav .logo img {
-    height: 17px;
-    width: auto;
-    margin-right: 20px
-}
 
 .content {
   padding: 75px;
