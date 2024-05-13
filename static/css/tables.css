@@ -151,22 +151,7 @@ dd {
   border: 1px solid #a82545;
 }
 
-@media (min-width: 460px) {
-  td {
-    text-align: left;
-  }
-  td:before {
-    display: inline-block;
-    text-align: right;
-    width: 140px;
-  }
-
-  .select {
-    padding-left: 120px;
-  }
-}
-@media (min-width: 1080px) {
-  table {
+table {
     display: table;
   }
 
