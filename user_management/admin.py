@@ -1,22 +1,24 @@
 from django.contrib import admin
-# from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from user_management.models import User
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import User, Unit
 
-# Register your models here.
+class UserAdmin(BaseUserAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'role', 'unit', 'is_staff')
+    list_filter = ('role', 'unit', 'is_staff')
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+        ('Role & Unit', {'fields': ('role', 'unit')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password', 'first_name', 'last_name', 'role', 'unit')}
+        ),
+    )
+    search_fields = ('username', 'email', 'first_name', 'last_name')
+    ordering = ('username',)
 
-# class UserCreationForm(UserCreationForm):
-#     class Meta:
-#         model = User
-#         fields = ("username", "email",)
-#
-# class UserChangeForm(UserChangeForm):
-#     class Meta:
-#         model = User
-#
-# class UserAdmin(UserAdmin):
-#     form = UserChangeForm
-#     add_form = UserCreationForm
-#     model = User
-#
-# admin.site.register(User, UserAdmin)
+admin.site.register(User, UserAdmin)
+admin.site.register(Unit)

@@ -26,6 +26,32 @@ class UserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
+
+class Unit(models.Model):
+    UNIT_TYPES = (
+        ('VERTICAL', 'Vertical'),
+        ('DOMAIN', 'Domain'), # Plant, HO & RO
+        ('SUB_DOMAIN', 'Sub Domain'), # Operations, Risk & Analytics, Functions
+    )
+
+    name = models.CharField(max_length=100)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    unit_type = models.CharField(max_length=20, choices=UNIT_TYPES)
+
+    def __str__(self):
+        return self.name
+
+
+
+class UserExactRoles(models.TextChoices):
+    VERTICAL_HEAD = 'Vertical Head', 'Vertical Head'
+    HOD = 'HoD', 'HoD'
+    HOS = 'HoS', 'HoS'
+    AUDITOR = 'Auditor', 'Auditor'
+    SITE_ADMIN = 'Site Admin', 'Site Admin'
+
+
+
 class User(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
     email = models.EmailField(max_length=255, unique=True)
@@ -34,6 +60,19 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+
+    # New fields
+    role = models.CharField(
+        max_length=20,
+        choices=UserExactRoles.choices,
+    )
+    unit = models.ForeignKey(
+        Unit,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='members'
+    )
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'

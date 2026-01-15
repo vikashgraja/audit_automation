@@ -23,9 +23,18 @@ def register_user(request):
             return redirect('user_list')
     else:
         form = UserCreationForm()
+    
+    # Create a mapping of unit IDs to their types for JavaScript filtering
+    from .models import Unit
+    import json
+    units = Unit.objects.all()
+    unit_types = {u.id: u.unit_type for u in units}
 
     # Render the registration page template (GET request)
-    return render(request, 'User_management/create_user.html',{'form': form})
+    return render(request, 'User_management/create_user.html', {
+        'form': form,
+        'unit_types_json': json.dumps(unit_types)
+    })
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
