@@ -1,16 +1,24 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from user_management.models import User
 # Register your models here.
 
-class UserCreationForm(UserCreationForm):
+class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "email", 'first_name', 'last_name', 'role', 'unit']
+        fields = ["employee_id", 'first_name', 'last_name', 'role', 'unit']
+    
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password("Audit@HMIL")
+        if commit:
+            user.save()
+        return user
 
 class UserChangeForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ["username", "email", 'first_name', 'last_name', 'role', 'unit']
+        fields = ["employee_id", 'first_name', 'last_name', 'role', 'unit']
 
 
 class SetPasswordForm(SetPasswordForm):

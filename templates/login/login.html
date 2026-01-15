@@ -3,31 +3,34 @@
 {% load static %}
 
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Audit Portal Login</title>
   <link rel="shortcut icon" href="{% static 'css/img/favicon.png' %}">
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
+
 <body>
 
-<div id="bg"></div>
+  <div id="bg"></div>
 
 
-<form method="post">
-  <div class="form-field">
-    <input type="text" placeholder="User ID" required name="username"/>
-  </div>
-  
-  <div class="form-field">
-    <input type="password" placeholder="Password" required name="password"/>
-  </div>
-  
-  <div class="form-field">
-    <button class="btn" type="submit">Log in</button>
-  </div>
-  {% csrf_token %}
-</form>
+  <form method="post">
+    <div class="form-field">
+      <input type="text" placeholder="Employee ID" required name="username" />
+    </div>
+
+    <div class="form-field">
+      <input type="password" placeholder="Password" required name="password" />
+    </div>
+
+    <div class="form-field">
+      <button class="btn" type="submit">Log in</button>
+    </div>
+    {% csrf_token %}
+  </form>
 
 </body>
+
 </html>

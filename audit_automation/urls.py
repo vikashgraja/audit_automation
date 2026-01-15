@@ -38,12 +38,12 @@ urlpatterns = [
 
     path('register/', user_management_views.register_user, name='register'),
     path('user_list/', user_management_views.user_list, name='user_list'),
-    path('edit_user/<str:username>', user_management_views.edit_user, name='edit_user'),
-    path('delete_user/<str:username>', user_management_views.deleteuser, name='delete_user'),
-    path('update_admin/<str:username>', user_management_views.changeadmin, name='update_admin'),
+    path('edit_user/<int:employee_id>', user_management_views.edit_user, name='edit_user'),
+    path('delete_user/<int:employee_id>', user_management_views.deleteuser, name='delete_user'),
+    path('update_admin/<int:employee_id>', user_management_views.changeadmin, name='update_admin'),
     path('unauthorized/', user_management_views.unauthorized, name='unauthorized'),
 
-    path("password/", auth_views.PasswordChangeView.as_view(template_name='login/password_change.html'),
+    path("password/", user_management_views.CustomPasswordChangeView.as_view(template_name='login/password_change.html'),
             name='password'),
     path("password/done/", auth_views.PasswordChangeDoneView.as_view(template_name='login/password_change_done.html'),
             name='password_change_done'),

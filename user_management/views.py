@@ -3,6 +3,18 @@ from django.contrib.auth.decorators import user_passes_test
 from .forms import UserCreationForm, UserChangeForm
 from .models import User
 from django.contrib import messages
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'login/password_change.html'
+    success_url = reverse_lazy('password_change_done')
+
+    def form_valid(self, form):
+        # Update the user's flag
+        self.request.user.password_change_required = False
+        self.request.user.save()
+        return super().form_valid(form)
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
 def user_list(request):
@@ -38,14 +50,14 @@ def register_user(request):
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
-def deleteuser(request, username):
-    user = User.objects.get(username=username)
+def deleteuser(request, employee_id):
+    user = User.objects.get(employee_id=employee_id)
     user.delete()
     return redirect("user_list")
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
-def changeadmin(request, username):
-    user = User.objects.get(username=username)
+def changeadmin(request, employee_id):
+    user = User.objects.get(employee_id=employee_id)
     if user.is_superuser == False:
         user.is_staff = True
         user.is_admin = True
@@ -60,8 +72,8 @@ def changeadmin(request, username):
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
-def edit_user(request, username):
-    user = User.objects.get(username=username)
+def edit_user(request, employee_id):
+    user = User.objects.get(employee_id=employee_id)
 
     if request.method == 'POST':
         form = UserChangeForm(request.POST, instance=user)

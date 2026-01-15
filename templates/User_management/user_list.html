@@ -3,8 +3,8 @@
 <!--https://reintech.io/blog/creating-a-custom-user-management-system-in-django-->
 {% block content %}
 
-    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
-    
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
+
 <br><br>
 <table border="2">
     <thead>
@@ -27,14 +27,16 @@
     {% for user in users %}
     <tr>
         <td>{{ forloop.counter }}</td>
-        <td> {{user.username}} </td>
+        <td> {{user.employee_id}} </td>
         <td> {{user.email}} </td>
         <td> {{user.first_name}} {{user.last_name}}</td>
         <td> {{user.is_superuser}} </td>
-        <td class='select'> 
-            <a class='button' href="{% url 'edit_user' username=user.username %}"> Edit User</a>
-            <a class='button' href="{% url 'delete_user' username=user.username %}" onclick="return confirm('Are You Sure to delete {{user.username}}')"> Delete User</a>
-            <a class='button' href="{% url 'update_admin' username=user.username %}" onclick="return confirm('Change Admin for {{user}}')"> Change Admin Status</a>
+        <td class='select'>
+            <a class='button' href="{% url 'edit_user' employee_id=user.employee_id %}"> Edit User</a>
+            <a class='button' href="{% url 'delete_user' employee_id=user.employee_id %}"
+                onclick="return confirm('Are You Sure to delete {{user.employee_id}}')"> Delete User</a>
+            <a class='button' href="{% url 'update_admin' employee_id=user.employee_id %}"
+                onclick="return confirm('Change Admin for {{user}}')"> Change Admin Status</a>
         </td>
     </tr>
     {% endfor %}

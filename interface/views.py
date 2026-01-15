@@ -18,6 +18,8 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            if user.password_change_required:
+                return redirect('password')
             return redirect("home")
         else:
             # messages.success(request, "Try again")
