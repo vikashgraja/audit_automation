@@ -130,9 +130,10 @@ nav .logo img {
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   nav .nav-content {
     padding: 0 20px;
+    justify-content: space-between;
   }
 
   .menu-toggle {
