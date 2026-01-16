@@ -109,18 +109,18 @@ tfoot th {
 
 /* Page Header and Search */
 .page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 24px;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 24px !important;
   gap: 20px;
   flex-wrap: wrap;
 }
 
 .header-actions {
-  display: flex;
+  display: flex !important;
   gap: 12px;
-  align-items: center;
+  align-items: center !important;
 }
 
 .search-container {
@@ -128,7 +128,8 @@ tfoot th {
   min-width: 300px;
 }
 
-.search-container i {
+.search-container i,
+.search-container svg {
   position: absolute;
   left: 12px;
   top: 50%;

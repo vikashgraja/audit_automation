@@ -6,20 +6,55 @@
 <!-- Load Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<div class="page-header">
-    <div class="header-title">
-        <h1 class="title1">Red Flag / Exceptions</h1>
-        <p class="subtitle" style="color: var(--text-secondary); margin-top: -16px; margin-bottom: 8px;">Monitor and
-            manage system alerts and exceptions</p>
+<style>
+    .page-header-new {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        margin-bottom: 24px;
+        gap: 20px;
+    }
+
+    .header-actions-new {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .title-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .title1-clean {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin: 0;
+        padding: 0;
+    }
+
+    .subtitle-clean {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin: 2px 0 0 0;
+    }
+</style>
+
+<div class="page-header-new">
+    <div class="title-area">
+        <h1 class="title1-clean">Red Flag / Exceptions</h1>
+        <p class="subtitle-clean">Monitor and manage system alerts and exceptions</p>
     </div>
-    <div class="header-actions">
+    <div class="header-actions-new">
         <div class="search-container">
             <i data-lucide="search"></i>
             <input type="text" id="flagSearch" class="search-input"
                 placeholder="Search by name, category, or in-charge...">
         </div>
         {% if request.user.is_superuser %}
-        <a class='button' href="{% url 'add_redflag' %}">
+        <a class='button' href="{% url 'add_redflag' %}" style="margin: 0;">
             <i data-lucide="plus-circle" size="18"></i>
             Add Red Flag
         </a>
@@ -41,51 +76,53 @@
             </tr>
         </thead>
         <tbody id="flagsBody">
-            {% for flag in flags %}
+            {% for rf in flags %}
             <tr class="flag-row">
                 <td data-label="S.No">{{ forloop.counter }}</td>
                 <td data-label="Category">
-                    {% if flag.category == "Red Flag" %}
+                    {% if rf.category == "Red Flag" %}
                     <span class="badge badge-redflag">
                         <i data-lucide="alert-circle" size="14"></i>
-                        {{ flag.category }}
+                        {{ rf.category }}
                     </span>
                     {% else %}
                     <span class="badge badge-exception">
                         <i data-lucide="file-warning" size="14"></i>
-                        {{ flag.category }}
+                        {{ rf.category }}
                     </span>
                     {% endif %}
                 </td>
-                <td data-label="Name" class="flag-name"><strong>{{ flag.name }}</strong></td>
+                <td data-label="Name" class="flag-name"><strong>{{ rf.name }}</strong></td>
                 <td data-label="InCharge">
                     <span style="display: flex; align-items: center; gap: 8px;">
                         <i data-lucide="user" size="14" style="color: var(--secondary-color)"></i>
-                        {{ flag.assigned_to }}
+                        {{ rf.assigned_to }}
                     </span>
                 </td>
-                <td data-label="Created">{{ flag.created_at|date:"d-m-Y" }}</td>
+                <td data-label="Created">{{ rf.created_at|date:"d-m-Y" }}</td>
                 <td data-label="Lastrun">
-                    <span style="display: flex; align-items: center; gap: 4px;">
-                        <i data-lucide="clock" size="14" style="color: var(--text-secondary)"></i>
-                        {{ flag.lastrun|date:"d/m/Y" }}
-                    </span>
-                    <small style="color: var(--text-secondary); margin-left: 18px;">{{ flag.lastrun|time:"H:i:s"
-                        }}</small>
+                    <div style="display: flex; flex-direction: column; gap: 2px;">
+                        {% if rf.lastrun %}
+                        <span>{{ rf.lastrun|date:"d/m/Y" }}</span>
+                        <small style="color: var(--text-secondary);">{{ rf.lastrun|time:"H:i:s" }}</small>
+                        {% else %}
+                        <span style="color: var(--text-secondary); font-style: italic;">Never</span>
+                        {% endif %}
+                    </div>
                 </td>
                 <td data-label="Action" class='select'>
-                    {% if flag.manual %}
-                    <a class='button button-outline' href="{% url 'download_manual' flag=flag.id %}"
+                    {% if rf.manual %}
+                    <a class='button button-outline' href="{% url 'download_manual' flag=rf.id %}"
                         title="Download Manual">
                         <i data-lucide="download" size="16"></i>
                     </a>
                     {% endif %}
                     {% if request.user.is_superuser %}
-                    <a class='button' href="{% url 'edit_rf' flag=flag.id %}" title="Edit">
+                    <a class='button' href="{% url 'edit_rf' flag=rf.id %}" title="Edit">
                         <i data-lucide="edit-3" size="16"></i>
                     </a>
-                    <a class='button button-danger' href="{% url 'delete_rf' flag=flag.id %}"
-                        onclick="return confirm('Are You Sure to delete {{ flag.name }}')" title="Delete">
+                    <a class='button button-danger' href="{% url 'delete_rf' flag=rf.id %}"
+                        onclick="return confirm('Are You Sure to delete {{ rf.name }}')" title="Delete">
                         <i data-lucide="trash-2" size="16"></i>
                     </a>
                     {% endif %}
@@ -106,10 +143,8 @@
 </div>
 
 <script>
-    // Initialize Lucide icons
     lucide.createIcons();
 
-    // Table search functionality
     document.getElementById('flagSearch').addEventListener('input', function () {
         const searchTerm = this.value.toLowerCase();
         const rows = document.querySelectorAll('.flag-row');
@@ -125,7 +160,6 @@
             }
         });
 
-        // Handle empty state for search
         const tbody = document.getElementById('flagsBody');
         const existingNoResults = document.getElementById('noResultsRow');
 
