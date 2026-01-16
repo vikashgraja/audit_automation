@@ -7,7 +7,7 @@ from user_management.models import User
 class redflags(models.Model):
     choices = [
         ("Red Flag", "Red Flag"),
-        ("Audit Exceptions", "Audit Exceptions")
+        ("Exceptions", "Exceptions")
     ]
     name = models.CharField(max_length=50)
     category = models.CharField(max_length=30,choices=choices)

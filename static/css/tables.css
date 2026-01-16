@@ -1,11 +1,13 @@
 /* Table Container */
 .table-wrapper {
-  background: var(--bg-white);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
   padding: 24px;
   border-radius: 12px;
   box-shadow: var(--shadow-sm);
   margin-bottom: 30px;
   overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 table {
@@ -105,6 +107,87 @@ tfoot th {
   border-top: 1px solid var(--border-color);
 }
 
+/* Page Header and Search */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-container {
+  position: relative;
+  min-width: 300px;
+}
+
+.search-container i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-white);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(0, 173, 210, 0.1);
+}
+
+/* Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  gap: 4px;
+}
+
+.badge-redflag {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-exception {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-secondary);
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: var(--border-color);
+  display: block;
+}
+
 /* Responsive Tables */
 @media (max-width: 768px) {
   .table-wrapper {
@@ -138,6 +221,10 @@ tfoot th {
     position: relative;
     padding-left: 50%;
     text-align: right;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   td:last-child {
@@ -155,5 +242,7 @@ tfoot th {
     text-align: left;
     font-weight: bold;
     content: attr(data-label);
+    display: flex;
+    align-items: center;
   }
 }
