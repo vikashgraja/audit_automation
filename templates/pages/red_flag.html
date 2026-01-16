@@ -2,52 +2,53 @@
 {% load static %}
 
 {% block content %}
-    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
 <h1 class="title1">Red Flag / Exceptions</h1>
-    <br>
-    <div class="table-wrapper">
-        <table border="2">
-            <thead>
-                <tr>
-                    <th style="width:2%">S.No</th>
-                    <th style="width:10%">Category</th>
-                    <th style="width:25%">Name</th>
-                    <th>InCharge</th>
-                    <th style="width:10%">Created</th>
-                    <th style="width:17%">Lastrun</th>
-                    <th style="width:13%">Action</th>
-                </tr>
-            </thead>
-            {% if request.user.is_superuser %}
-                <tfoot>
-                    <tr>
-                        <th colspan='8'>
-                            <a class='button' href="{% url 'add_redflag' %}">Add Red Flag</a>
-                        </th>
-                    </tr>
-                </tfoot>
-            {% endif %}
-            {% for flag in flags %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ flag.category }}</td>
-                    <td>{{ flag.name }}</td>
-                    <td>{{ flag.assigned_to }}</td>
-                    <td>{{ flag.created_at|date:"d-m-Y" }}</td>
-                    <td>{{ flag.lastrun|date:"d/m/Y" }}-{{ flag.lastrun|time:"H:i:s" }}</td>
-                    <td class='select'>
-                        {% if flag.manual %}
-                            <a class='button' href="{% url 'download_manual' flag=flag.id %}"> Manual </a>
-                        {% endif %}
-                        {% if request.user.is_superuser %}
-                            <a class='button' href="{% url 'edit_rf' flag=flag.id %}"> Edit </a>
-                            <a class='button' href="{% url 'delete_rf' flag=flag.id %}" onclick="return confirm('Are You Sure to delete {{ flag.name }}')"> Delete </a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
+<br>
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th style="width:2%">S.No</th>
+                <th style="width:10%">Category</th>
+                <th style="width:25%">Name</th>
+                <th>InCharge</th>
+                <th style="width:10%">Created</th>
+                <th style="width:17%">Lastrun</th>
+                <th style="width:13%">Action</th>
+            </tr>
+        </thead>
+        {% for flag in flags %}
+        <tr>
+            <td data-label="S.No">{{ forloop.counter }}</td>
+            <td data-label="Category">{{ flag.category }}</td>
+            <td data-label="Name">{{ flag.name }}</td>
+            <td data-label="InCharge">{{ flag.assigned_to }}</td>
+            <td data-label="Created">{{ flag.created_at|date:"d-m-Y" }}</td>
+            <td data-label="Lastrun">{{ flag.lastrun|date:"d/m/Y" }}-{{ flag.lastrun|time:"H:i:s" }}</td>
+            <td data-label="Action" class='select'>
+                {% if flag.manual %}
+                <a class='button button-outline' href="{% url 'download_manual' flag=flag.id %}"> Manual </a>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                <a class='button' href="{% url 'edit_rf' flag=flag.id %}"> Edit </a>
+                <a class='button button-danger' href="{% url 'delete_rf' flag=flag.id %}"
+                    onclick="return confirm('Are You Sure to delete {{ flag.name }}')"> Delete </a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        {% if request.user.is_superuser %}
+        <tfoot>
+            <tr>
+                <th colspan='7'>
+                    <a class='button' href="{% url 'add_redflag' %}">Add Red Flag</a>
+                </th>
+            </tr>
+        </tfoot>
+        {% endif %}
+    </table>
+</div>
 
 {% endblock content %}
 
