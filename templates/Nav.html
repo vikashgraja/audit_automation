@@ -21,16 +21,17 @@
             <!--                <div class="logo">-->
             <!--                    <a>AUDIT 360&deg;</a>-->
             <!--                </div>-->
-            <ul class="nav-links">
+            <ul class="nav-links main-nav">
                 <li><a href="{% url 'home' %}">Audit Mgmt</a></li>
                 <li><a href="{% url 'redflag' %}">Red Flag</a></li>
-                <!--                    <li><a href="http://10.54.194.181:8501/" target='_blank'>Automation</a></li>-->
                 <li><a href="{% url 'automation' %}">Automation</a></li>
                 <li><a href="{% url 'learn' %}">Learn</a></li>
                 {% if user.is_superuser %}
                 <li><a href="{% url 'user_list' %}">Users</a></li>
                 <li><a href="#">Task</a></li>
                 {% endif %}
+            </ul>
+            <ul class="nav-links user-nav">
                 <li><a href="{% url 'password' %}">Change Password</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             </ul>

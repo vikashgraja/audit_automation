@@ -51,25 +51,28 @@ nav .nav-content {
   padding: 0 40px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 nav .logo {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-right: 40px;
+  white-space: nowrap;
 }
 
 nav .logo a {
   text-decoration: none;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   letter-spacing: 0.5px;
   color: var(--text-on-dark);
+  white-space: nowrap;
+  text-transform: uppercase;
 }
 
 nav .logo img {
-  height: 24px;
+  height: 22px;
   width: auto;
 }
 
@@ -80,14 +83,19 @@ nav .logo img {
   gap: 8px;
 }
 
+.nav-content .main-nav {
+  margin-right: auto;
+}
+
 .nav-links li a {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.85);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   padding: 8px 16px;
   border-radius: 6px;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .nav-links li a:hover {
