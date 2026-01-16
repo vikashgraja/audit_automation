@@ -1,0 +1,52 @@
+{% extends "Nav.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
+
+<div class="page-header"
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+    <div class="header-title-group">
+        <h1 class="title1" style="margin: 0; border-bottom: none; padding: 0;">{{ rf.name }} - Information</h1>
+        <p class="subtitle" style="color: var(--text-secondary); font-size: 14px; margin: 4px 0 0 0;">Detailed
+            information and metadata for this red flag</p>
+    </div>
+    <div class="header-actions">
+        <a href="{% url 'redflag' %}" class="button button-outline">
+            <i data-lucide="arrow-left" size="18"></i>
+            Back to List
+        </a>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <div style="padding: 20px;">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">General Details</h3>
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+            <tr>
+                <td style="font-weight: 600; width: 200px;">Category:</td>
+                <td>{{ rf.category }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 600;">In-Charge:</td>
+                <td>{{ rf.assigned_to }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 600;">Created At:</td>
+                <td>{{ rf.created_at }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 600;">Last Run:</td>
+                <td>{{ rf.lastrun|default:"Never" }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Load Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+
+{% endblock content %}

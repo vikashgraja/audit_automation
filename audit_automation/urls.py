@@ -49,4 +49,6 @@ urlpatterns = [
             name='password_change_done'),
 
     path('download_manual/<str:flag>/', interface_views.download_manual, name='download_manual'),
+    path('redflag/info/<str:flag_id>/', interface_views.redflag_info, name='redflag_info'),
+    path('redflag/report/<str:flag_id>/', interface_views.redflag_report, name='redflag_report'),
 ]

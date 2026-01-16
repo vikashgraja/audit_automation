@@ -1,0 +1,36 @@
+{% extends "Nav.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
+
+<div class="page-header"
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+    <div class="header-title-group">
+        <h1 class="title1" style="margin: 0; border-bottom: none; padding: 0;">{{ rf.name }} - Report</h1>
+        <p class="subtitle" style="color: var(--text-secondary); font-size: 14px; margin: 4px 0 0 0;">Exception reports
+            and compliance analytics</p>
+    </div>
+    <div class="header-actions">
+        <a href="{% url 'redflag' %}" class="button button-outline">
+            <i data-lucide="arrow-left" size="18"></i>
+            Back to List
+        </a>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+        <i data-lucide="bar-chart-2" size="48" style="margin-bottom: 20px; opacity: 0.5;"></i>
+        <h3>Report Generation System</h3>
+        <p>Analytics and reporting features for <strong>{{ rf.name }}</strong> are currently under development.</p>
+    </div>
+</div>
+
+<!-- Load Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+
+{% endblock content %}

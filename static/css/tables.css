@@ -94,11 +94,24 @@ tbody tr:last-child td {
   border-color: var(--secondary-color);
 }
 
+/* Compact Button Variant */
+.button-compact {
+  padding: 6px 10px;
+  font-size: 13px;
+  min-width: 32px;
+}
+
+/* Action Buttons Container */
+.action-buttons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 /* Table Specific Adjustments */
 .select {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  vertical-align: middle;
 }
 
 tfoot th {

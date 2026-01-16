@@ -103,3 +103,15 @@ def download_manual(request, flag):
     response = HttpResponse(redflag.manual, content_type='application/force-download')
     response['Content-Disposition'] = f'attachment; filename="{redflag.manual.name}"'
     return response
+
+
+@login_required(login_url='login')
+def redflag_info(request, flag_id):
+    rf = get_object_or_404(redflags, id=flag_id)
+    return render(request, 'pages/red_flag_info.html', {'rf': rf})
+
+
+@login_required(login_url='login')
+def redflag_report(request, flag_id):
+    rf = get_object_or_404(redflags, id=flag_id)
+    return render(request, 'pages/red_flag_report.html', {'rf': rf})

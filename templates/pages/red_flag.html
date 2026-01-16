@@ -111,21 +111,31 @@
                     </div>
                 </td>
                 <td data-label="Action" class='select'>
-                    {% if rf.manual %}
-                    <a class='button button-outline' href="{% url 'download_manual' flag=rf.id %}"
-                        title="Download Manual">
-                        <i data-lucide="download" size="16"></i>
-                    </a>
-                    {% endif %}
-                    {% if request.user.is_superuser %}
-                    <a class='button' href="{% url 'edit_rf' flag=rf.id %}" title="Edit">
-                        <i data-lucide="edit-3" size="16"></i>
-                    </a>
-                    <a class='button button-danger' href="{% url 'delete_rf' flag=rf.id %}"
-                        onclick="return confirm('Are You Sure to delete {{ rf.name }}')" title="Delete">
-                        <i data-lucide="trash-2" size="16"></i>
-                    </a>
-                    {% endif %}
+                    <div class="action-buttons">
+                        <a class='button button-outline button-compact' href="{% url 'redflag_info' flag_id=rf.id %}"
+                            title="Info">
+                            <i data-lucide="info" size="14"></i>
+                        </a>
+                        <a class='button button-outline button-compact' href="{% url 'redflag_report' flag_id=rf.id %}"
+                            title="Report">
+                            <i data-lucide="file-text" size="14"></i>
+                        </a>
+                        {% if rf.manual %}
+                        <a class='button button-outline button-compact' href="{% url 'download_manual' flag=rf.id %}"
+                            title="Download Manual">
+                            <i data-lucide="download" size="14"></i>
+                        </a>
+                        {% endif %}
+                        {% if request.user.is_superuser %}
+                        <a class='button button-compact' href="{% url 'edit_rf' flag=rf.id %}" title="Edit">
+                            <i data-lucide="edit-3" size="14"></i>
+                        </a>
+                        <a class='button button-danger button-compact' href="{% url 'delete_rf' flag=rf.id %}"
+                            onclick="return confirm('Are You Sure to delete {{ rf.name }}')" title="Delete">
+                            <i data-lucide="trash-2" size="14"></i>
+                        </a>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
             {% empty %}
