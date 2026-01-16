@@ -25,13 +25,13 @@
             </div>
             <div class="nav-links-wrapper">
                 <ul class="nav-links main-nav">
-                    <li><a href="{% url 'home' %}">Audit Mgmt</a></li>
+                    <li><a href="{% url 'home' %}">Dashboard</a></li>
                     <li><a href="{% url 'redflag' %}">Red Flag</a></li>
                     <li><a href="{% url 'automation' %}">Automation</a></li>
                     <li><a href="{% url 'learn' %}">Learn</a></li>
                     {% if user.is_superuser %}
                     <li><a href="{% url 'user_list' %}">Users</a></li>
-                    <li><a href="#">Task</a></li>
+                    <li><a href="#">Audits</a></li>
                     {% endif %}
                 </ul>
                 <ul class="nav-links user-nav">
