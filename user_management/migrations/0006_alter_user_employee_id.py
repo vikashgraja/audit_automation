@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("user_management", "0005_remove_user_username_user_employee_id_and_more"),
     ]

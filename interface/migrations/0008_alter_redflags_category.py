@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("interface", "0007_remove_redflags_description_redflags_category"),
     ]

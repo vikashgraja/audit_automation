@@ -19,7 +19,7 @@ def validate_file_extension(value):
     )
 
     if ext not in allowed_extensions:
-        raise ValidationError(f'Unsupported file extension. Allowed extensions are: {", ".join(allowed_extensions)}')
+        raise ValidationError(f"Unsupported file extension. Allowed extensions are: {', '.join(allowed_extensions)}")
 
 
 def validate_file_size(value):

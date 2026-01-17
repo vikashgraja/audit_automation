@@ -6,7 +6,6 @@ import interface.validators
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("interface", "0009_alter_redflags_category"),
     ]
