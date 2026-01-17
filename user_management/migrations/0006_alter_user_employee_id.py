@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user_management', '0005_remove_user_username_user_employee_id_and_more'),
+        ("user_management", "0005_remove_user_username_user_employee_id_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='employee_id',
+            model_name="user",
+            name="employee_id",
             field=models.IntegerField(unique=True),
         ),
     ]

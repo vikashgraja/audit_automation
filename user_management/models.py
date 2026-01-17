@@ -1,16 +1,16 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
 
 
 class UserManager(BaseUserManager):
     def create_user(self, employee_id, email=None, password=None, **extra_fields):
         if not email:
-            # We can now auto-generate or require it. 
+            # We can now auto-generate or require it.
             # If the user model saves it automatically, we might pass None.
             # But BaseUserManager usually expects it.
             # Let's rely on the model save for auto-generation if not provided.
             email = f"{employee_id}@hmil.net"
-        
+
         email = self.normalize_email(email)
         user = self.model(employee_id=employee_id, email=email, **extra_fields)
         user.set_password(password)
@@ -18,42 +18,39 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, employee_id, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True')
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True")
 
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True')
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True")
 
         return self.create_user(employee_id, email, password, **extra_fields)
 
 
-
 class Unit(models.Model):
     UNIT_TYPES = (
-        ('VERTICAL', 'Vertical'),
-        ('DOMAIN', 'Domain'), # Plant, HO & RO
-        ('SUB_DOMAIN', 'Sub Domain'), # Operations, Risk & Analytics, Functions
+        ("VERTICAL", "Vertical"),
+        ("DOMAIN", "Domain"),  # Plant, HO & RO
+        ("SUB_DOMAIN", "Sub Domain"),  # Operations, Risk & Analytics, Functions
     )
 
     name = models.CharField(max_length=100)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="children")
     unit_type = models.CharField(max_length=20, choices=UNIT_TYPES)
 
     def __str__(self):
         return self.name
 
 
-
 class UserExactRoles(models.TextChoices):
-    VERTICAL_HEAD = 'Vertical Head', 'Vertical Head'
-    HOD = 'HoD', 'HoD'
-    HOS = 'HoS', 'HoS'
-    AUDITOR = 'Auditor', 'Auditor'
-    SITE_ADMIN = 'Site Admin', 'Site Admin'
-
+    VERTICAL_HEAD = "Vertical Head", "Vertical Head"
+    HOD = "HoD", "HoD"
+    HOS = "HoS", "HoS"
+    AUDITOR = "Auditor", "Auditor"
+    SITE_ADMIN = "Site Admin", "Site Admin"
 
 
 class User(AbstractBaseUser):
@@ -71,17 +68,11 @@ class User(AbstractBaseUser):
         max_length=20,
         choices=UserExactRoles.choices,
     )
-    unit = models.ForeignKey(
-        Unit,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='members'
-    )
+    unit = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name="members")
 
-    USERNAME_FIELD = 'employee_id'
-    EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+    USERNAME_FIELD = "employee_id"
+    EMAIL_FIELD = "email"
+    REQUIRED_FIELDS = ["email", "first_name", "last_name"]
 
     objects = UserManager()
 
@@ -94,4 +85,4 @@ class User(AbstractBaseUser):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.employee_id} {self.first_name} {self.last_name}'
+        return f"{self.employee_id} {self.first_name} {self.last_name}"

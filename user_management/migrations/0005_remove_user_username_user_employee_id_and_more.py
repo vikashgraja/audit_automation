@@ -6,22 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user_management', '0004_alter_user_role'),
+        ("user_management", "0004_alter_user_role"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='user',
-            name='username',
+            model_name="user",
+            name="username",
         ),
         migrations.AddField(
-            model_name='user',
-            name='employee_id',
+            model_name="user",
+            name="employee_id",
             field=models.IntegerField(default=1, unique=True),
         ),
         migrations.AddField(
-            model_name='user',
-            name='password_change_required',
+            model_name="user",
+            name="password_change_required",
             field=models.BooleanField(default=True),
         ),
     ]

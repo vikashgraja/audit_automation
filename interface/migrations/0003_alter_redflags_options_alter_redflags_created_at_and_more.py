@@ -6,22 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('interface', '0002_alter_redflags_options_remove_redflags_manuals_and_more'),
+        ("interface", "0002_alter_redflags_options_remove_redflags_manuals_and_more"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='redflags',
-            options={'ordering': ['created_at']},
+            name="redflags",
+            options={"ordering": ["created_at"]},
         ),
         migrations.AlterField(
-            model_name='redflags',
-            name='created_at',
+            model_name="redflags",
+            name="created_at",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='redflags',
-            name='lastrun',
+            model_name="redflags",
+            name="lastrun",
             field=models.DateTimeField(blank=True, null=True),
         ),
     ]

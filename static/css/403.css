@@ -55,7 +55,7 @@ body{
   letter-spacing: 3px;
   text-shadow: 0 0 5px #6EECC1;
   animation: flux 2s linear infinite;
-  
+
 }
 .trash{
   width: 170px;
@@ -145,7 +145,7 @@ body{
   }
   5% {
     transform: scaleX(0.2);
-  } 
+  }
   70%{
     transform: scaleX(0.2);
   }

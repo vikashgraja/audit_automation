@@ -1,14 +1,15 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
-from .forms import UserCreationForm, UserChangeForm
-from .models import User
-from django.contrib import messages
 from django.contrib.auth.views import PasswordChangeView
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
+from .forms import CustomUserCreationForm, UserChangeForm
+from .models import Unit, User
+
+
 class CustomPasswordChangeView(PasswordChangeView):
-    template_name = 'login/password_change.html'
-    success_url = reverse_lazy('password_change_done')
+    template_name = "login/password_change.html"
+    success_url = reverse_lazy("password_change_done")
 
     def form_valid(self, form):
         # Update the user's flag
@@ -16,49 +17,51 @@ class CustomPasswordChangeView(PasswordChangeView):
         self.request.user.save()
         return super().form_valid(form)
 
-@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
+
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
 def user_list(request):
     users = User.objects.all()
-    return render(request, 'User_management/user_list.html', {'users': users})
+    return render(request, "User_management/user_list.html", {"users": users})
 
-@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
+
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
 def register_user(request):
     # Check if the HTTP request method is POST (form submission)
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        print('formed')
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        print("formed")
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
             user.save()
             # messages.success(request, 'User registered successfully')
-            return redirect('user_list')
+            return redirect("user_list")
     else:
-        form = UserCreationForm()
-    
+        form = CustomUserCreationForm()
+
     # Create a mapping of unit IDs to their types for JavaScript filtering
-    from .models import Unit
     import json
+
     units = Unit.objects.all()
     unit_types = {u.id: u.unit_type for u in units}
 
     # Render the registration page template (GET request)
-    return render(request, 'User_management/create_user.html', {
-        'form': form,
-        'unit_types_json': json.dumps(unit_types)
-    })
+    return render(
+        request, "User_management/create_user.html", {"form": form, "unit_types_json": json.dumps(unit_types)}
+    )
 
 
-@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
 def deleteuser(request, employee_id):
     user = User.objects.get(employee_id=employee_id)
     user.delete()
     return redirect("user_list")
 
-@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
+
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
 def changeadmin(request, employee_id):
     user = User.objects.get(employee_id=employee_id)
-    if user.is_superuser == False:
+    if user.is_superuser is not True:
         user.is_staff = True
         user.is_admin = True
         user.is_superuser = True
@@ -71,21 +74,22 @@ def changeadmin(request, employee_id):
     return redirect("user_list")
 
 
-@user_passes_test(lambda u: u.is_superuser, login_url='/unauthorized/')
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
 def edit_user(request, employee_id):
     user = User.objects.get(employee_id=employee_id)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserChangeForm(request.POST, instance=user)
 
         if form.is_valid():
             form.save()
 
-            return redirect('user_list')
+            return redirect("user_list")
     else:
         form = UserChangeForm(instance=user)
 
-    return render(request, 'User_management/update_user.html', {'form': form})
+    return render(request, "User_management/update_user.html", {"form": form})
+
 
 def unauthorized(request):
-    return render(request, 'User_management/403.html')
+    return render(request, "User_management/403.html")

@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('interface', '0007_remove_redflags_description_redflags_category'),
+        ("interface", "0007_remove_redflags_description_redflags_category"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='redflags',
-            name='category',
-            field=models.CharField(choices=[('Red Flag', 'Red Flag'), ('Audit Exceptions', 'Audit Exceptions')], max_length=30),
+            model_name="redflags",
+            name="category",
+            field=models.CharField(
+                choices=[("Red Flag", "Red Flag"), ("Audit Exceptions", "Audit Exceptions")], max_length=30
+            ),
         ),
     ]

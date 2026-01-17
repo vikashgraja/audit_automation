@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('interface', '0003_alter_redflags_options_alter_redflags_created_at_and_more'),
+        ("interface", "0003_alter_redflags_options_alter_redflags_created_at_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='redflags',
-            name='manual',
-            field=models.FileField(blank=True, null=True, upload_to='manuals/'),
+            model_name="redflags",
+            name="manual",
+            field=models.FileField(blank=True, null=True, upload_to="manuals/"),
         ),
     ]

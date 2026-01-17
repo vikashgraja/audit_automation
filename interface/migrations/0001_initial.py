@@ -7,20 +7,19 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='redflags',
+            name="redflags",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('description', models.TextField(max_length=250)),
-                ('username', models.CharField(max_length=30)),
-                ('userid', models.IntegerField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('manuals', models.FileField(upload_to='manuals/')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=50)),
+                ("description", models.TextField(max_length=250)),
+                ("username", models.CharField(max_length=30)),
+                ("userid", models.IntegerField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("manuals", models.FileField(upload_to="manuals/")),
             ],
         ),
     ]

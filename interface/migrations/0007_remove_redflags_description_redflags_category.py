@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('interface', '0006_delete_uploadedfile'),
+        ("interface", "0006_delete_uploadedfile"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='redflags',
-            name='description',
+            model_name="redflags",
+            name="description",
         ),
         migrations.AddField(
-            model_name='redflags',
-            name='category',
-            field=models.CharField(default='E', max_length=30),
+            model_name="redflags",
+            name="category",
+            field=models.CharField(default="E", max_length=30),
             preserve_default=False,
         ),
     ]
