@@ -1,5 +1,6 @@
 from django.db import models
 from user_management.models import User
+from .validators import validate_file_extension, validate_file_size
 
 # Create your models here.
 
@@ -14,7 +15,12 @@ class redflags(models.Model):
     assigned_to = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     created_at = models.DateField(auto_now_add=True)
     lastrun = models.DateTimeField(null=True, blank=True)
-    manual = models.FileField(upload_to='manuals/',null=True, blank=True)
+    manual = models.FileField(
+        upload_to='manuals/',
+        null=True,
+        blank=True,
+        validators=[validate_file_extension, validate_file_size]
+    )
 
     def __str__(self):
         return self.name

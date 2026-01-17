@@ -1,4 +1,10 @@
-.venv
-*__pycache__
-*.sqlite3
+.env
+*.pyc
+__pycache__/
+db.sqlite3
 *.DS_Store
+media/
+*.log
+security_*.json
+security_*.txt
+penetration_test_results.json

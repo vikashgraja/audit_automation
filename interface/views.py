@@ -7,10 +7,17 @@ from interface.models import redflags
 from django.contrib import messages
 from .forms import RedFlagForm
 from django.http import HttpResponse
+from django_ratelimit.decorators import ratelimit
+import logging
+
+# Security logger
+security_logger = logging.getLogger('django.security')
 
 
 # Create your views here.
 
+
+@ratelimit(key='ip', rate='5/m', method='POST', block=True)
 def login_page(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -18,11 +25,14 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            security_logger.info(f"Successful login for user: {username}")
             if user.password_change_required:
                 return redirect('password')
             return redirect("home")
         else:
-            # messages.success(request, "Try again")
+            # Log failed login attempt
+            security_logger.warning(f"Failed login attempt for username: {username} from IP: {request.META.get('REMOTE_ADDR')}")
+            messages.error(request, "Invalid credentials. Please try again.")
             return redirect("login")
 
     return render(request, "login/login.html")
