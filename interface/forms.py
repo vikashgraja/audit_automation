@@ -1,14 +1,15 @@
 import django.forms as forms
 from django.forms import ModelForm
 
-from .models import redflags
+from user_management.models import User
+from .models import Automation
 
 
-class RedFlagForm(ModelForm):
+class AutomationForm(ModelForm):
     class Meta:
-        model = redflags
+        model = Automation
         fields = ["name", "category", "assigned_to", "manual"]
-        choices = [("Red Flag", "Red Flag"), ("Exceptions", "Exceptions")]
+        choices = [("Automation", "Automation"), ("Exceptions", "Exceptions")]
 
         category = forms.ChoiceField(
             label="Category",
@@ -21,7 +22,9 @@ class RedFlagForm(ModelForm):
             ),
         )
         assigned_to = forms.ModelChoiceField(
-            queryset=redflags.objects.all(),
+            queryset=User.objects.filter(
+                is_superuser=False
+            ),  # Assuming logic: assign to auditors/users. Fixes the bug too.
             empty_label="Select Auditor",
             widget=forms.Select(
                 attrs={

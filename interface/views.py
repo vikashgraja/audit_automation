@@ -7,9 +7,9 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django_ratelimit.decorators import ratelimit
 
-from interface.models import redflags
+from interface.models import Automation
 
-from .forms import RedFlagForm
+from .forms import AutomationForm
 
 # Security logger
 security_logger = logging.getLogger("django.security")
@@ -43,7 +43,7 @@ def login_page(request):
 
 @login_required(login_url="login")
 def home(request):
-    # return redirect('redflag')
+    # return redirect('automation')
     return render(request, "pages/home.html")
 
 
@@ -54,19 +54,19 @@ def user_logout(request):
 
 
 @login_required(login_url="login")
-def red_flag(request):
+def automation(request):
     user = request.user
     if user.is_superuser:
-        flags = redflags.objects.all()
+        items = Automation.objects.all()
     else:
-        flags = redflags.objects.filter(assigned_to=user)
-    context = {"flags": flags}
-    return render(request, "pages/red_flag.html", context=context)
+        items = Automation.objects.filter(assigned_to=user)
+    context = {"flags": items}
+    return render(request, "pages/automation.html", context=context)
 
 
 @login_required(login_url="login")
-def automate(request):
-    return render(request, "pages/automation.html")
+def tools(request):
+    return render(request, "pages/tools.html")
 
 
 @login_required(login_url="login")
@@ -75,56 +75,61 @@ def learn(request):
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
-def addredflag(request):
+def add_automation(request):
     if request.method == "POST":
-        form = RedFlagForm(request.POST, request.FILES)
+        form = AutomationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("redflag")
+            return redirect("automation")
     else:
-        form = RedFlagForm()
-    return render(request, "pages/create_red_flag.html", {"form": form})
+        form = AutomationForm()
+    return render(request, "pages/create_automation.html", {"form": form})
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
-def delete_redflag(request, flag):
-    redflag = redflags.objects.get(id=flag)
-    redflag.delete()
-    return redirect("redflag")
+def delete_automation(request, item_id):
+    item = get_object_or_404(Automation, id=item_id)
+    item.delete()
+    return redirect("automation")
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
-def edit_redflag(request, flag):
-    redflag = redflags.objects.get(id=flag)
+def edit_automation(request, item_id):
+    item = get_object_or_404(Automation, id=item_id)
 
     if request.method == "POST":
-        form = RedFlagForm(request.POST, request.FILES, instance=redflag)
+        form = AutomationForm(request.POST, request.FILES, instance=item)
 
         if form.is_valid():
             form.save()
 
-            return redirect("redflag")
+            return redirect("automation")
     else:
-        form = RedFlagForm(instance=redflag)
+        form = AutomationForm(instance=item)
 
-    return render(request, "pages/edit_red_flag.html", {"form": form})
+    return render(request, "pages/edit_automation.html", {"form": form})
 
 
 @login_required(login_url="login")
 def download_manual(request, flag):
-    redflag = redflags.objects.get(id=flag)
-    response = HttpResponse(redflag.manual, content_type="application/force-download")
-    response["Content-Disposition"] = f'attachment; filename="{redflag.manual.name}"'
+    item = get_object_or_404(Automation, id=flag)
+    # Check if manual exists
+    if not item.manual:
+        messages.error(request, "No manual uploaded for this automation.")
+        return redirect("automation")
+
+    response = HttpResponse(item.manual, content_type="application/force-download")
+    response["Content-Disposition"] = f'attachment; filename="{item.manual.name}"'
     return response
 
 
 @login_required(login_url="login")
-def redflag_info(request, flag_id):
-    rf = get_object_or_404(redflags, id=flag_id)
-    return render(request, "pages/red_flag_info.html", {"rf": rf})
+def automation_info(request, item_id):
+    item = get_object_or_404(Automation, id=item_id)
+    return render(request, "pages/automation_info.html", {"rf": item})
 
 
 @login_required(login_url="login")
-def redflag_report(request, flag_id):
-    rf = get_object_or_404(redflags, id=flag_id)
-    return render(request, "pages/red_flag_report.html", {"rf": rf})
+def automation_report(request, item_id):
+    item = get_object_or_404(Automation, id=item_id)
+    return render(request, "pages/automation_report.html", {"rf": item})

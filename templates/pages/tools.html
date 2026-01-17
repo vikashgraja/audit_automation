@@ -1,0 +1,17 @@
+{% extends "Nav.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/automation.css' %}">
+
+<h1 class="title1">Audit Tools</h1><br><br>
+
+<section>
+  <div class="wrapper">
+    <button class="button --glow" onclick=" window.open('http://10.54.194.181:8501','_blank')">Vendor and CL
+      DashBoard</button>
+    <button class="button --glow" onclick=" window.open('http://10.54.194.181:5000','_blank')">Search Bot</button>
+  </div>
+</section>
+
+{% endblock content %}

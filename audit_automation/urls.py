@@ -26,11 +26,15 @@ urlpatterns = [
     path("login/", interface_views.login_page, name="login"),
     path("logout/", interface_views.user_logout, name="logout"),
     path("", interface_views.home, name="home"),
-    path("redflag/", interface_views.red_flag, name="redflag"),
-    path("add_redflag/", interface_views.addredflag, name="add_redflag"),
-    path("deleterf/<str:flag>", interface_views.delete_redflag, name="delete_rf"),
-    path("editrf/<str:flag>", interface_views.edit_redflag, name="edit_rf"),
-    path("automation/", interface_views.automate, name="automation"),
+    # Automation (formerly RedFlag)
+    path("automation/", interface_views.automation, name="automation"),
+    path("add_automation/", interface_views.add_automation, name="add_automation"),
+    path("delete_automation/<str:item_id>", interface_views.delete_automation, name="delete_automation"),
+    path("edit_automation/<str:item_id>", interface_views.edit_automation, name="edit_automation"),
+    path("automation/info/<str:item_id>/", interface_views.automation_info, name="automation_info"),
+    path("automation/report/<str:item_id>/", interface_views.automation_report, name="automation_report"),
+    # Tools (formerly Automation)
+    path("tools/", interface_views.tools, name="tools"),
     path("learn/", interface_views.learn, name="learn"),
     path("register/", user_management_views.register_user, name="register"),
     path("user_list/", user_management_views.user_list, name="user_list"),
@@ -49,6 +53,4 @@ urlpatterns = [
         name="password_change_done",
     ),
     path("download_manual/<str:flag>/", interface_views.download_manual, name="download_manual"),
-    path("redflag/info/<str:flag_id>/", interface_views.redflag_info, name="redflag_info"),
-    path("redflag/report/<str:flag_id>/", interface_views.redflag_report, name="redflag_report"),
 ]
