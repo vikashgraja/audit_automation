@@ -6,6 +6,30 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "django>=5.2.10",
-    "django-ratelimit>=4.1.0",
-    "dotenv>=0.9.9",
 ]
+
+[tool.black]
+line-length = 120
+target-version = ['py311']
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | migrations
+  | __pycache__
+  | \.pytest_cache
+  | \.mypy_cache
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 120
+skip_glob = ["*/migrations/*", "*/.venv/*"]
+
+[tool.bandit]
+exclude_dirs = ["/tests", "*/migrations/*", "*/.venv/*"]
+skips = ["B101", "B601"]
+
+[tool.bandit.assert_used]
+skips = ["*/test_*.py", "*/tests.py"]

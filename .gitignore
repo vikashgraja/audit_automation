@@ -8,3 +8,4 @@ media/
 security_*.json
 security_*.txt
 penetration_test_results.json
+.secrets.baseline
