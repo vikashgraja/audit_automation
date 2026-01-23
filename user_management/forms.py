@@ -24,6 +24,10 @@ class UserChangeForm(UserChangeForm):
         model = User
         fields = ["employee_id", "first_name", "last_name", "role", "unit"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["employee_id"].disabled = True
+
 
 class SetPasswordForm(SetPasswordForm):
     class Meta:

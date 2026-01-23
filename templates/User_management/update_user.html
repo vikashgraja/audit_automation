@@ -2,15 +2,78 @@
 {% load static %}
 
 {% block content %}
-<!-- update_user.html -->
-<link rel="stylesheet" href='{% static "css/RF_create.css" %}'>
-<div class="edit-tasks">
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+<!-- Load Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<div class="form-container">
+  <div class="form-header">
+    <h1 class="form-title">Edit User Info</h1>
+    <p class="form-subtitle">Update details for {{ form.instance.first_name }} {{ form.instance.last_name }}</p>
+  </div>
+
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <div class="row">
-      <input type="submit" value="Update">
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+    {% for field in form %}
+    {% if field.name != 'password' %}
+    <div class="form-group">
+      <label for="{{ field.id_for_label }}">
+        {{ field.label }}
+        <!-- We can add 'Required' indicator if we want, but for now distinct labels are enough -->
+      </label>
+
+      <!-- Render the field. We add the 'form-control' class if it's not a checkbox -->
+      <!-- Since we can't easily add class in template tag without widget tweaks, we rely on CSS matching or JS,
+                 OR we assume the form widget already has it? No, standard Django doesn't.
+                 We can wrap it or script it. Let's use a small script to add class or just styling 'select, input[type=text]...' in CSS?
+                 Actually, forms.css defines .form-control.
+                 I'll try to add the class using widget tweaks if I had widget_tweaks installed.
+                 Since I don't, I will use a simple JS script to add 'form-control' to all inputs in the form.
+            -->
+      {{ field }}
+
+      {% if field.help_text %}
+      <span class="form-help">{{ field.help_text|safe }}</span>
+      {% endif %}
+
+      {% if field.errors %}
+      <ul class="errorlist">
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <div class="form-actions">
+      <a href="{% url 'user_list' %}" class="btn btn-outline">Cancel</a>
+      <button type="submit" class="btn btn-primary">
+        <i data-lucide="save" size="16" style="margin-right: 8px;"></i>
+        Update User
+      </button>
     </div>
   </form>
 </div>
+
+<script>
+  lucide.createIcons();
+
+  // Auto-apply form-control class to standard inputs for styling
+  document.addEventListener('DOMContentLoaded', function () {
+    const inputs = document.querySelectorAll('form input[type="text"], form input[type="email"], form input[type="password"], form input[type="number"], form select, form textarea');
+    inputs.forEach(input => {
+      input.classList.add('form-control');
+    });
+  });
+</script>
+
 {% endblock content %}
