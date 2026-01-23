@@ -9,7 +9,7 @@ class AutomationForm(ModelForm):
     class Meta:
         model = Automation
         fields = ["name", "category", "assigned_to", "manual"]
-        choices = [("Automation", "Automation"), ("Exceptions", "Exceptions")]
+        choices = [("Red Flag", "Red Flag"), ("Exceptions", "Exceptions")]
 
         category = forms.ChoiceField(
             label="Category",

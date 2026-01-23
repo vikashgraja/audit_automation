@@ -80,9 +80,9 @@
             <tr class="flag-row">
                 <td data-label="S.No">{{ forloop.counter }}</td>
                 <td data-label="Category">
-                    {% if item.category == "Automation" %}
+                    {% if item.category == "Red Flag" %}
                     <span class="badge badge-redflag">
-                        <i data-lucide="zap" size="14"></i>
+                        <i data-lucide="alert-circle" size="14"></i>
                         {{ item.category }}
                     </span>
                     {% else %}

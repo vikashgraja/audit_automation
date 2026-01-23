@@ -8,7 +8,7 @@ from .validators import validate_file_extension, validate_file_size
 
 
 class Automation(models.Model):
-    choices = [("Automation", "Automation"), ("Exceptions", "Exceptions")]
+    choices = [("Red Flag", "Red Flag"), ("Exceptions", "Exceptions")]
     name = models.CharField(max_length=50)
     category = models.CharField(max_length=30, choices=choices)
     assigned_to = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
