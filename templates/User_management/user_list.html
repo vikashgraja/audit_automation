@@ -6,51 +6,16 @@
 <!-- Load Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<style>
-    .page-header-new {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        margin-bottom: 24px;
-        gap: 20px;
-    }
-
-    .header-actions-new {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-    }
-
-    .title-area {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .title1-clean {
-        font-size: 26px;
-        font-weight: 700;
-        color: var(--primary-color);
-        margin: 0;
-        padding: 0;
-    }
-
-    .subtitle-clean {
-        color: var(--text-secondary);
-        font-size: 14px;
-        margin: 2px 0 0 0;
-    }
-</style>
-
-<div class="page-header-new">
+<div class="page-header">
     <div class="title-area">
-        <h1 class="title1-clean">User Management</h1>
-        <p class="subtitle-clean">Manage auditors, administrators, and system users</p>
+        <h1 class="page-title">User Management</h1>
+        <p class="page-subtitle">Manage auditors, administrators, and system users</p>
     </div>
-    <div class="header-actions-new">
+    <div class="header-actions">
         <div class="search-container">
             <i data-lucide="search"></i>
-            <input type="text" id="userSearch" class="search-input" placeholder="Search by ID, name, or email...">
+            <input type="text" id="userSearch" class="search-input" placeholder="Search by ID, name, or email..."
+                aria-label="Search users">
         </div>
         <a class='button' href="{% url 'register' %}" style="margin: 0;">
             <i data-lucide="user-plus" size="18"></i>
