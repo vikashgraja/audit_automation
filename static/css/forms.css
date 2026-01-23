@@ -68,6 +68,18 @@
     color: #94a3b8;
 }
 
+/* Hide number input spinners */
+.form-control::-webkit-outer-spin-button,
+.form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-control[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
 /* Help Text */
 .form-help {
     display: block;
