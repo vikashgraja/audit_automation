@@ -1,45 +1,163 @@
 {% extends "Nav.html" %}
 {% load static %}
-<!--https://reintech.io/blog/creating-a-custom-user-management-system-in-django-->
+
 {% block content %}
-
 <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+<!-- Load Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
 
-<br><br>
-<table border="2">
-    <thead>
-        <tr>
-            <th style="width:2%">S.No</th>
-            <th>User ID</th>
-            <th>E-Mail</th>
-            <th>Name</th>
-            <th>Admin</th>
-            <th style="width:40%">Actions</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th colspan='6'>
-                <a class='button' href="{% url 'register' %}">Add Auditors</a>
-            </th>
-        </tr>
-    </tfoot>
-    {% for user in users %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td> {{user.employee_id}} </td>
-        <td> {{user.email}} </td>
-        <td> {{user.first_name}} {{user.last_name}}</td>
-        <td> {{user.is_superuser}} </td>
-        <td class='select'>
-            <a class='button' href="{% url 'edit_user' employee_id=user.employee_id %}"> Edit User</a>
-            <a class='button' href="{% url 'delete_user' employee_id=user.employee_id %}"
-                onclick="return confirm('Are You Sure to delete {{user.employee_id}}')"> Delete User</a>
-            <a class='button' href="{% url 'update_admin' employee_id=user.employee_id %}"
-                onclick="return confirm('Change Admin for {{user}}')"> Change Admin Status</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<style>
+    .page-header-new {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        margin-bottom: 24px;
+        gap: 20px;
+    }
+
+    .header-actions-new {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .title-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .title1-clean {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin: 0;
+        padding: 0;
+    }
+
+    .subtitle-clean {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin: 2px 0 0 0;
+    }
+</style>
+
+<div class="page-header-new">
+    <div class="title-area">
+        <h1 class="title1-clean">User Management</h1>
+        <p class="subtitle-clean">Manage auditors, administrators, and system users</p>
+    </div>
+    <div class="header-actions-new">
+        <div class="search-container">
+            <i data-lucide="search"></i>
+            <input type="text" id="userSearch" class="search-input" placeholder="Search by ID, name, or email...">
+        </div>
+        <a class='button' href="{% url 'register' %}" style="margin: 0;">
+            <i data-lucide="user-plus" size="18"></i>
+            Add Auditor
+        </a>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <table id="usersTable">
+        <thead>
+            <tr>
+                <th style="width:5%">S.No</th>
+                <th style="width:15%">User ID</th>
+                <th style="width:25%">E-Mail</th>
+                <th style="width:20%">Name</th>
+                <th style="width:15%">Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="usersBody">
+            {% for user in users %}
+            <tr class="user-row">
+                <td data-label="S.No">{{ forloop.counter }}</td>
+                <td data-label="User ID" class="user-id"><strong>{{ user.employee_id }}</strong></td>
+                <td data-label="E-Mail">{{ user.email }}</td>
+                <td data-label="Name" class="user-name">{{ user.first_name }} {{ user.last_name }}</td>
+                <td data-label="Role">
+                    <span class="badge" style="background: #f1f5f9; color: #475569; font-weight: 500;">
+                        {{ user.role|default:"--" }}
+                    </span>
+                </td>
+                <td data-label="Action" class='select'>
+                    <div class="action-buttons">
+                        <a class='button button-outline button-compact'
+                            href="{% url 'edit_user' employee_id=user.employee_id %}" title="Edit User">
+                            <i data-lucide="edit-3" size="14"></i>
+                        </a>
+                        <a class='button button-outline button-compact'
+                            href="{% url 'update_admin' employee_id=user.employee_id %}"
+                            onclick="return confirm('Change Admin Status for {{user.first_name}}?')"
+                            title="Toggle Admin Status">
+                            <i data-lucide="shield" size="14"></i>
+                        </a>
+                        <a class='button button-danger button-compact'
+                            href="{% url 'delete_user' employee_id=user.employee_id %}"
+                            onclick="return confirm('Are You Sure to delete {{user.employee_id}}?')"
+                            title="Delete User">
+                            <i data-lucide="trash-2" size="14"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">
+                    <div class="empty-state">
+                        <i data-lucide="users"></i>
+                        <p>No users found.</p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    document.getElementById('userSearch').addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.user-row');
+        let foundAny = false;
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                row.style.display = '';
+                foundAny = true;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        const tbody = document.getElementById('usersBody');
+        const existingNoResults = document.getElementById('noResultsRow');
+
+        if (!foundAny && rows.length > 0) {
+            if (!existingNoResults) {
+                const noResultsRow = document.createElement('tr');
+                noResultsRow.id = 'noResultsRow';
+                noResultsRow.innerHTML = `
+                    <td colspan="6">
+                        <div class="empty-state">
+                            <i data-lucide="search-x"></i>
+                            <p>No results matching "${this.value}"</p>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(noResultsRow);
+                lucide.createIcons();
+            }
+        } else if (existingNoResults) {
+            existingNoResults.remove();
+        }
+    });
+</script>
 
 {% endblock content %}
