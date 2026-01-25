@@ -106,7 +106,7 @@ tbody tr:last-child td {
   display: flex;
   gap: 6px;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 /* Table Specific Adjustments */

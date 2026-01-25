@@ -6,52 +6,16 @@
 <!-- Load Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<style>
-    .page-header-new {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        margin-bottom: 24px;
-        gap: 20px;
-    }
-
-    .header-actions-new {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-    }
-
-    .title-area {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .title1-clean {
-        font-size: 26px;
-        font-weight: 700;
-        color: var(--primary-color);
-        margin: 0;
-        padding: 0;
-    }
-
-    .subtitle-clean {
-        color: var(--text-secondary);
-        font-size: 14px;
-        margin: 2px 0 0 0;
-    }
-</style>
-
-<div class="page-header-new">
+<div class="page-header">
     <div class="title-area">
-        <h1 class="title1-clean">Automation / Exceptions</h1>
-        <p class="subtitle-clean">Monitor and manage system alerts and exceptions</p>
+        <h1 class="page-title">Automation / Exceptions</h1>
+        <p class="page-subtitle">Monitor and manage system alerts and exceptions</p>
     </div>
-    <div class="header-actions-new">
+    <div class="header-actions">
         <div class="search-container">
             <i data-lucide="search"></i>
             <input type="text" id="flagSearch" class="search-input"
-                placeholder="Search by name, category, or in-charge...">
+                placeholder="Search by name, category, or in-charge..." aria-label="Search automation">
         </div>
         {% if request.user.is_superuser %}
         <a class='button' href="{% url 'add_automation' %}" style="margin: 0;">
@@ -72,7 +36,7 @@
                 <th>In-Charge</th>
                 <th style="width:10%">Created</th>
                 <th style="width:17%">Last Run</th>
-                <th style="width:13%">Actions</th>
+                <th style="width:18%">Actions</th>
             </tr>
         </thead>
         <tbody id="flagsBody">
