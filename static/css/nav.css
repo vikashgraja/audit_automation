@@ -46,7 +46,7 @@ nav {
 
 nav .nav-content {
   width: 100%;
-  max-width: 1400px;
+  max-width: 96%;
   margin: 0 auto;
   padding: 0 40px;
   display: flex;
@@ -199,7 +199,7 @@ nav .logo img {
 
 .content {
   padding: 100px 40px 40px;
-  max-width: 1400px;
+  max-width: 96%;
   margin: 0 auto;
   min-height: calc(100vh - 70px);
 }
