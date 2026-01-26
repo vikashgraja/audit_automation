@@ -57,6 +57,27 @@
             <li class="message {{ message.tags }}">{{ message }}</li>
             {% endfor %}
         </ul>
+        <script>
+            // Auto-dismiss messages after 3 seconds
+            setTimeout(function () {
+                const messages = document.querySelectorAll('.message');
+                messages.forEach(function (msg) {
+                    // Slide out animation
+                    msg.style.transform = 'translateX(120%)';
+                    msg.style.opacity = '0';
+
+                    // Wait for transition to finish before removing
+                    setTimeout(function () {
+                        msg.remove();
+                        // Remove container if empty
+                        const container = document.querySelector('.messages');
+                        if (container && container.children.length === 0) {
+                            container.remove();
+                        }
+                    }, 400); // 400ms matches CSS transition duration
+                });
+            }, 3000);
+        </script>
         {% endif %}
         {% block content %}
         {% endblock %}

@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.views import PasswordChangeView
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 
 from .forms import CustomUserCreationForm, UserChangeForm
@@ -34,7 +35,7 @@ def register_user(request):
             user = form.save()
             user.refresh_from_db()
             user.save()
-            # messages.success(request, 'User registered successfully')
+            messages.success(request, "User registered successfully")
             return redirect("user_list")
     else:
         form = CustomUserCreationForm()
@@ -53,8 +54,9 @@ def register_user(request):
 
 @user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
 def deleteuser(request, employee_id):
-    user = User.objects.get(employee_id=employee_id)
+    user = get_object_or_404(User, employee_id=employee_id)
     user.delete()
+    messages.success(request, "User deleted successfully.")
     return redirect("user_list")
 
 
@@ -66,11 +68,13 @@ def changeadmin(request, employee_id):
         user.is_admin = True
         user.is_superuser = True
         user.save()
+        messages.success(request, f"Admin privileges granted to {user.first_name}.")
     else:
         user.is_staff = False
         user.is_admin = False
         user.is_superuser = False
         user.save()
+        messages.success(request, f"Privileges revoked for {user.first_name}.")
     return redirect("user_list")
 
 
@@ -83,6 +87,7 @@ def edit_user(request, employee_id):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "User updated successfully.")
 
             return redirect("user_list")
     else:

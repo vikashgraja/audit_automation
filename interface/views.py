@@ -48,7 +48,7 @@ def home(request):
 
 def user_logout(request):
     logout(request)
-    # messages.info(request, "Logged out successfully!")
+    messages.info(request, "Logged out successfully!")
     return redirect("login")
 
 
@@ -102,6 +102,7 @@ def add_automation(request):
         form = AutomationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Automation added successfully.")
             return redirect("automation")
     else:
         form = AutomationForm()
@@ -112,6 +113,7 @@ def add_automation(request):
 def delete_automation(request, item_id):
     item = get_object_or_404(Automation, id=item_id)
     item.delete()
+    messages.success(request, "Automation deleted successfully.")
     return redirect("automation")
 
 
@@ -124,6 +126,7 @@ def edit_automation(request, item_id):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "Automation updated successfully.")
 
             return redirect("automation")
     else:
