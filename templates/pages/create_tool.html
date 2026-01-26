@@ -1,0 +1,41 @@
+{% extends "Nav.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href='{% static "css/RF_create.css" %}'>
+<br>
+<h1 class="title1">Add Tool</h1><br>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="message {{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-25">
+                <label for="name">Tool Name</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="name" name="name" placeholder="Tool Name (e.g., Vendor Dashboard)" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="url">Tool URL</label>
+            </div>
+            <div class="col-75">
+                <input type="url" id="url" name="url" placeholder="https://example.com" required>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Add Tool">
+        </div>
+    </form>
+</div>
+{% endblock content %}

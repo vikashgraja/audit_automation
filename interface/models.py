@@ -23,3 +23,16 @@ class Automation(models.Model):
 
     class Meta:
         ordering = ["created_at"]
+
+
+class Tool(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["-created_at"]

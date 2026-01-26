@@ -7,8 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django_ratelimit.decorators import ratelimit
 
-from interface.models import Automation
-
+from interface.models import Automation, Tool
 from .forms import AutomationForm
 
 # Security logger
@@ -66,7 +65,30 @@ def automation(request):
 
 @login_required(login_url="login")
 def tools(request):
-    return render(request, "pages/tools.html")
+    items = Tool.objects.all()
+    return render(request, "pages/tools.html", {"tools": items})
+
+
+@user_passes_test(lambda u: u.role == "Site Admin" or u.is_superuser, login_url="/unauthorized/")
+def add_tool(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        url = request.POST.get("url")
+        if name and url:
+            Tool.objects.create(name=name, url=url, created_by=request.user)
+            messages.success(request, "Tool added successfully.")
+            return redirect("tools")
+        else:
+            messages.error(request, "Please provide both name and URL.")
+    return render(request, "pages/create_tool.html")
+
+
+@user_passes_test(lambda u: u.role == "Site Admin" or u.is_superuser, login_url="/unauthorized/")
+def delete_tool(request, tool_id):
+    tool = get_object_or_404(Tool, id=tool_id)
+    tool.delete()
+    messages.success(request, "Tool deleted successfully.")
+    return redirect("tools")
 
 
 @login_required(login_url="login")

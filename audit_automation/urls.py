@@ -35,6 +35,8 @@ urlpatterns = [
     path("automation/report/<str:item_id>/", interface_views.automation_report, name="automation_report"),
     # Tools (formerly Automation)
     path("tools/", interface_views.tools, name="tools"),
+    path("add_tool/", interface_views.add_tool, name="add_tool"),
+    path("delete_tool/<int:tool_id>/", interface_views.delete_tool, name="delete_tool"),
     path("learn/", interface_views.learn, name="learn"),
     path("register/", user_management_views.register_user, name="register"),
     path("user_list/", user_management_views.user_list, name="user_list"),

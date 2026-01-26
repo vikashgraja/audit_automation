@@ -2,16 +2,74 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/automation.css' %}">
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
+<script src="https://unpkg.com/lucide@latest"></script>
 
-<h1 class="title1">Audit Tools</h1><br><br>
-
-<section>
-  <div class="wrapper">
-    <button class="button --glow" onclick=" window.open('http://10.54.194.181:8501','_blank')">Vendor and CL
-      DashBoard</button>
-    <button class="button --glow" onclick=" window.open('http://10.54.194.181:5000','_blank')">Search Bot</button>
+<div class="page-header">
+  <div class="title-area">
+    <h1 class="page-title">Audit Tools</h1>
+    <p class="page-subtitle">External tools and dashboards for audit management</p>
   </div>
-</section>
+  <div class="header-actions">
+    {% if request.user.role == 'Site Admin' or request.user.is_superuser %}
+    <a class='button' href="{% url 'add_tool' %}" style="margin: 0;">
+      <i data-lucide="plus-circle" size="18"></i>
+      Add Tool
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="table-wrapper">
+  <table id="toolsTable">
+    <thead>
+      <tr>
+        <th style="width: 10%;">S.No</th>
+        <th style="width: 40%;">Name</th>
+        <th style="width: 30%;">Link</th>
+        <th style="width: 20%;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tool in tools %}
+      <tr>
+        <td data-label="S.No">{{ forloop.counter }}</td>
+        <td data-label="Name"><strong>{{ tool.name }}</strong></td>
+        <td data-label="Link">
+          <a href="{{ tool.url }}" target="_blank" class="button button-outline button-compact">
+            <i data-lucide="external-link" size="14"></i>
+            Open Tool
+          </a>
+        </td>
+        <td data-label="Actions">
+          {% if request.user.role == 'Site Admin' or request.user.is_superuser %}
+          <div class="action-buttons">
+            <a class='button button-danger button-compact' href="{% url 'delete_tool' tool_id=tool.id %}"
+              onclick="return confirm('Delete tool {{ tool.name }}?')" title="Delete Tool">
+              <i data-lucide="trash-2" size="14"></i>
+            </a>
+          </div>
+          {% else %}
+          <span style="color: var(--text-secondary); font-style: italic;">Read Only</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">
+          <div class="empty-state">
+            <i data-lucide="wrench"></i>
+            <p>No tools found.</p>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
 
 {% endblock content %}
