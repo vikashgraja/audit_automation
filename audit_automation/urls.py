@@ -44,6 +44,11 @@ urlpatterns = [
     path("delete_user/<int:employee_id>", user_management_views.deleteuser, name="delete_user"),
     path("update_admin/<int:employee_id>", user_management_views.changeadmin, name="update_admin"),
     path("unauthorized/", user_management_views.unauthorized, name="unauthorized"),
+    # Privilege Management
+    path("privileges/", user_management_views.privilege_list, name="privilege_list"),
+    path("privileges/create/", user_management_views.create_privilege, name="create_privilege"),
+    path("privileges/edit/<int:group_id>/", user_management_views.edit_privilege, name="edit_privilege"),
+    path("privileges/delete/<int:group_id>/", user_management_views.delete_privilege, name="delete_privilege"),
     path(
         "password/",
         user_management_views.CustomPasswordChangeView.as_view(template_name="login/password_change.html"),

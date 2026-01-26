@@ -4,7 +4,8 @@ from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 
-from .forms import CustomUserCreationForm, UserChangeForm
+from django.contrib.auth.models import Group
+from .forms import CustomUserCreationForm, UserChangeForm, PrivilegeForm
 from .models import Unit, User
 
 
@@ -93,7 +94,58 @@ def edit_user(request, employee_id):
     else:
         form = UserChangeForm(instance=user)
 
-    return render(request, "User_management/update_user.html", {"form": form})
+    import json
+
+    units = Unit.objects.all()
+    unit_types = {u.id: u.unit_type for u in units}
+
+    return render(
+        request, "User_management/update_user.html", {"form": form, "unit_types_json": json.dumps(unit_types)}
+    )
+
+
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
+def privilege_list(request):
+    groups = Group.objects.all()
+    # Add count of members to each group for display (optional but nice)
+    for group in groups:
+        group.member_count = group.user_set.count()  # user_set is default related name for User.groups
+    return render(request, "User_management/privilege_list.html", {"groups": groups})
+
+
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
+def create_privilege(request):
+    if request.method == "POST":
+        form = PrivilegeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Privilege created successfully.")
+            return redirect("privilege_list")
+    else:
+        form = PrivilegeForm()
+    return render(request, "User_management/create_privilege.html", {"form": form, "title": "Create Privilege"})
+
+
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
+def edit_privilege(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    if request.method == "POST":
+        form = PrivilegeForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Privilege updated successfully.")
+            return redirect("privilege_list")
+    else:
+        form = PrivilegeForm(instance=group)
+    return render(request, "User_management/create_privilege.html", {"form": form, "title": "Edit Privilege"})
+
+
+@user_passes_test(lambda u: u.is_superuser, login_url="/unauthorized/")
+def delete_privilege(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    group.delete()
+    messages.success(request, "Privilege deleted successfully.")
+    return redirect("privilege_list")
 
 
 def unauthorized(request):

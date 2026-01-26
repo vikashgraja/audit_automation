@@ -1,0 +1,71 @@
+{% extends "Nav.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
+<!-- Load Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<div class="page-header">
+    <div class="title-area">
+        <h1 class="page-title">Privilege Management</h1>
+        <p class="page-subtitle">Manage groups and access privileges</p>
+    </div>
+    <div class="header-actions">
+        <a class='button' href="{% url 'create_privilege' %}" style="margin: 0;">
+            <i data-lucide="plus" size="18"></i>
+            Add Privilege
+        </a>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <table id="privilegesTable">
+        <thead>
+            <tr>
+                <th style="width:5%">S.No</th>
+                <th style="width:75%">Privilege Name</th>
+                <th style="width:10%">Members</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr>
+                <td data-label="S.No">{{ forloop.counter }}</td>
+                <td data-label="Privilege Name"><strong>{{ group.name }}</strong></td>
+                <td data-label="Members">{{ group.member_count }}</td>
+                <td data-label="Action" class='select'>
+                    <div class="action-buttons">
+                        <a class='button button-outline button-compact'
+                            href="{% url 'edit_privilege' group_id=group.id %}" title="Edit Privilege">
+                            <i data-lucide="edit-3" size="14"></i>
+                        </a>
+                        <a class='button button-danger button-compact'
+                            href="{% url 'delete_privilege' group_id=group.id %}"
+                            onclick="return confirm('Are You Sure to delete {{group.name}}?')"
+                            title="Delete Privilege">
+                            <i data-lucide="trash-2" size="14"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">
+                    <div class="empty-state">
+                        <i data-lucide="shield-alert"></i>
+                        <p>No privileges found.</p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+
+{% endblock content %}

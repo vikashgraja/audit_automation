@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
 
@@ -47,13 +47,12 @@ class Unit(models.Model):
 
 class UserExactRoles(models.TextChoices):
     VERTICAL_HEAD = "Vertical Head", "Vertical Head"
-    HOD = "HoD", "HoD"
-    HOS = "HoS", "HoS"
+    DOMAIN_HEAD = "Domain Head", "Domain Head"
+    SUB_DOMAIN_HEAD = "Sub Domain Head", "Sub Domain Head"
     AUDITOR = "Auditor", "Auditor"
-    SITE_ADMIN = "Site Admin", "Site Admin"
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     employee_id = models.IntegerField(unique=True)
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=30)
@@ -64,10 +63,7 @@ class User(AbstractBaseUser):
     password_change_required = models.BooleanField(default=True)
 
     # New fields
-    role = models.CharField(
-        max_length=20,
-        choices=UserExactRoles.choices,
-    )
+    role = models.CharField(max_length=20, choices=UserExactRoles.choices, null=True, blank=True)
     unit = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True, blank=True, related_name="members")
 
     USERNAME_FIELD = "employee_id"

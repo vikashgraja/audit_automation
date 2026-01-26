@@ -33,6 +33,7 @@
                 <th style="width:25%">E-Mail</th>
                 <th style="width:20%">Name</th>
                 <th style="width:15%">Role</th>
+                <th style="width:15%">Privileges</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -47,6 +48,16 @@
                     <span class="badge" style="background: #f1f5f9; color: #475569; font-weight: 500;">
                         {{ user.role|default:"--" }}
                     </span>
+                </td>
+                <td data-label="Privileges">
+                    {% for group in user.groups.all %}
+                    <span class="badge"
+                        style="background: #e0e7ff; color: #3730a3; font-weight: 500; font-size: 0.75rem; margin-right: 4px;">
+                        {{ group.name }}
+                    </span>
+                    {% empty %}
+                    <span style="color: #94a3b8; font-size: 0.8rem;">None</span>
+                    {% endfor %}
                 </td>
                 <td data-label="Action" class='select'>
                     <div class="action-buttons">

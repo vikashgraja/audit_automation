@@ -69,7 +69,7 @@ def tools(request):
     return render(request, "pages/tools.html", {"tools": items})
 
 
-@user_passes_test(lambda u: u.role == "Site Admin" or u.is_superuser, login_url="/unauthorized/")
+@user_passes_test(lambda u: u.groups.filter(name="Site Admin").exists() or u.is_superuser, login_url="/unauthorized/")
 def add_tool(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -83,7 +83,7 @@ def add_tool(request):
     return render(request, "pages/create_tool.html")
 
 
-@user_passes_test(lambda u: u.role == "Site Admin" or u.is_superuser, login_url="/unauthorized/")
+@user_passes_test(lambda u: u.groups.filter(name="Site Admin").exists() or u.is_superuser, login_url="/unauthorized/")
 def delete_tool(request, tool_id):
     tool = get_object_or_404(Tool, id=tool_id)
     tool.delete()
