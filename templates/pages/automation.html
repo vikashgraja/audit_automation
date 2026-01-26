@@ -60,7 +60,11 @@
                 <td data-label="InCharge">
                     <span style="display: flex; align-items: center; gap: 8px;">
                         <i data-lucide="user" size="14" style="color: var(--secondary-color)"></i>
-                        {{ item.assigned_to }}
+                        {% if item.assigned_to %}
+                        {{ item.assigned_to.first_name }} {{ item.assigned_to.last_name }}
+                        {% else %}
+                        Unassigned
+                        {% endif %}
                     </span>
                 </td>
                 <td data-label="Created">{{ item.created_at|date:"d-m-Y" }}</td>
